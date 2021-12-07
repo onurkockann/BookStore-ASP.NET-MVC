@@ -1,4 +1,37 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewBag.Title = "Home Page";
+    Model m = new Model();
+
+    //Kategoriler,yazarlar ve yayınevleri çekiliyor.
+    List<genre> pd = m.genres.ToList();
+    List<author> ad = m.authors.ToList();
+    List<publisher> pb = m.publishers.ToList();
+
+    List<SelectListItem> itemsP = new List<SelectListItem>();
+    List<SelectListItem> itemsPa = new List<SelectListItem>();
+    List<SelectListItem> itemsPb = new List<SelectListItem>();
+
+    foreach (genre itemP in pd)
+    {
+        itemsP.Add(new SelectListItem { Text = itemP.gName, Value = itemP.id.ToString() });
+    }
+    ViewBag.Kats = itemsP;
+
+    foreach (author itemPa in ad)
+    {
+        itemsPa.Add(new SelectListItem { Text = itemPa.aName, Value = itemPa.id.ToString() });
+    }
+    ViewBag.Auts = itemsPa;
+
+    foreach (publisher itemPb in pb)
+    {
+        itemsPb.Add(new SelectListItem { Text = itemPb.pName, Value = itemPb.id.ToString() });
+    }
+    ViewBag.Publs = itemsPb;
+}
+@using BookStore.Models
+
+<!DOCTYPE html>
 <html>
 <head>
     <!-- Required meta tags -->
@@ -11,7 +44,6 @@
     <title>Book Store</title>
     @RenderSection("head", false)
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -27,18 +59,39 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">En çok satanlar</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav media-right mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Kategoriler
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Bilim Kurgu</a></li>
-                            <li><a class="dropdown-item" href="#">Fantastik</a></li>
-                            <li><a class="dropdown-item" href="#">Felsefe</a></li>
-                            <li><a class="dropdown-item" href="#">Roman</a></li>
-                            <li><a class="dropdown-item" href="#">Çizgi Roman</a></li>
-                            <li><a class="dropdown-item" href="#">Araştırma Tarihi</a></li>
-                            <li><a class="dropdown-item" href="#">Çocuk</a></li>
+                            @for (int i = 0; i < ViewBag.Kats.Count; i++)
+                            {
+                                <li><a class="dropdown-item" href="/Home/FindKat?id=@ViewBag.Kats[i].Value">@ViewBag.Kats[i].Text</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Yazarlar
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @for (int i = 0; i < ViewBag.Auts.Count; i++)
+                            {
+                                <li><a class="dropdown-item" href="/Author/Detail?id=@ViewBag.Auts[i].Value">@ViewBag.Auts[i].Text</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Yayınevleri
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @for (int i = 0; i < ViewBag.Publs.Count; i++)
+                            {
+                                <li><a class="dropdown-item" href="/Home/FindPubls?id=@ViewBag.Publs[i].Value">@ViewBag.Publs[i].Text</a></li>
+                            }
                         </ul>
                     </li>
                 </ul>
@@ -49,7 +102,8 @@
             </div>
         </div>
     </nav>
-    <div style="background-color:red;width:100%; height:5%;">@ViewBag.Alert</div>
+    <div style="background-color:red;width:100%; height:10%;">@ViewBag.Alert</div>
+    <div style="background-color:lawngreen;width:100%; height:10%;">@ViewBag.Done</div>
     <div class="container body-content">
         @RenderBody()
         <hr />

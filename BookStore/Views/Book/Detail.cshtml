@@ -40,7 +40,7 @@
           <tbody>
             <tr>
               <th class="pl-0 w-25" scope="row"><strong>Yazar</strong></th>
-              <td>@Model.author1.aName</td>
+              <td><a href="/Author/Detail?id=@Model.author1.id">@Model.author1.aName</a></td>
             </tr>
             <tr>
               <th class="pl-0 w-25" scope="row"><strong>Yayınevi</strong></th>
@@ -48,7 +48,7 @@
             </tr>
             <tr>
               <th class="pl-0 w-25" scope="row"><strong>Yayın tarihi</strong></th>
-              <td>@Model.bDate</td>
+              <td>@Convert.ToDateTime(Model.bDate).ToShortDateString()</td>
             </tr>
           </tbody>
         </table>

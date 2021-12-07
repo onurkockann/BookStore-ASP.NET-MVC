@@ -7,20 +7,21 @@ using BookStore.Models;
 
 namespace BookStore.Controllers
 {
-    public class BookController : Controller
+    public class AuthorController : Controller
     {
         Model m = new Model();//Veritabanındaki tablolarda bulunan columnları modellemek ve manipüle etmek için her zaman kullanılacak olan geçici
                               //Model nesnesi global olarak tanımlandı.
-        // GET: Book
-        public ActionResult Detail(decimal? isbn)
-        {
-            book getKitap = m.books.FirstOrDefault(x => x.isbn == isbn);//Kitap aranıyor.
+                              // GET: Book
 
-            if (getKitap != null)//Kitap mevcut ise ilgili detay sayfasına yönlendiriliyor.
-                return View(getKitap);
+        public ActionResult Detail(int? id)
+        {
+            author getAuth = m.authors.FirstOrDefault(x => x.id == id);//Yazar aranıyor.
+
+            if (getAuth != null)//Yazar mevcut ise ilgili detay sayfasına yönlendiriliyor.
+                return View(getAuth);
             else
             {
-                TempData["0"] = "Kitap bulunamadı.";//Index sayfasında alert vermek için geçici data açılıyor ve içine mesajı yazılıyor.
+                TempData["0"] = "Yazar bulunamadı.";//Index sayfasında alert vermek için geçici data açılıyor ve içine mesajı yazılıyor.
                 return RedirectToAction("Index", "Home");
             }
         }
