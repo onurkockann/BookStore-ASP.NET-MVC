@@ -62,7 +62,7 @@
                 </ul>
                 <ul class="navbar-nav media-right mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Kategoriler
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -73,7 +73,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Yazarlar
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -84,13 +84,35 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Yayınevleri
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @for (int i = 0; i < ViewBag.Publs.Count; i++)
                             {
                                 <li><a class="dropdown-item" href="/Home/FindPubls?id=@ViewBag.Publs[i].Value">@ViewBag.Publs[i].Text</a></li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav media-right mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-user"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @if (@HttpContext.Current.User.Identity.Name != "")
+                            {
+                                <li><a class="dropdown-item" href="/User/Profil">Profilim</a></li>
+                                <li><a class="dropdown-item" href="/User/Orders">Siparişlerim</a></li>
+                                <li><a class="dropdown-item" href="#">Sepetim</a></li>
+                                <li><a class="dropdown-item" href="/User/Logout">Çıkış</a></li>
+                            }
+                            else
+                            {
+                                <li><a class="dropdown-item" href="/User/Login">Giriş yap</a></li>
+                                <li><a class="dropdown-item" href="/User/Register">Kayıt ol</a></li>
+                                <li><a class="dropdown-item" href="#">Sepetim</a></li>
                             }
                         </ul>
                     </li>
@@ -105,6 +127,21 @@
     <div style="background-color:red;width:100%; height:10%;">@ViewBag.Alert</div>
     <div style="background-color:lawngreen;width:100%; height:10%;">@ViewBag.Done</div>
     <div class="container body-content">
+        @if (ViewBag.DoneMsg != null)
+        {
+            <div class="alert alert-success alert-dismissible">
+                <h5><i class="icon fas fa-check"></i> Başarılı!</h5>
+                @ViewBag.DoneMsg
+            </div>
+        }
+        @if (ViewBag.FailMsg != null)
+        {
+            <br />
+            <div class="alert alert-danger alert-dismissible">
+                <h5><i class="icon fas fa-exclamation-triangle"></i> Hata!</h5>
+                @ViewBag.FailMsg
+            </div>
+        }
         @RenderBody()
         <hr />
         <footer>

@@ -7,16 +7,29 @@
 <div class="p-5 mb-4 bg-light border rounded-3">
     <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold">Book Store</h1>
-        <p class="col-md-8 fs-4">En yeni ve en popüler kitaplara ulaşabileceğiniz tek kaynağa hoşgeldiniz.</p>
+        <p class="col-md-8 fs-4">En yeni ve en popüler kitaplara ulaşabileceğiniz kaynağa hoşgeldiniz.</p>
     </div>
-    <div class="row">
-        <div class="col-md-6" align="right">
-            <a href="#" class="btn btn-primary btn-lg">Giriş yap</a>
+    @if (@HttpContext.Current.User.Identity.Name == "")
+    {
+        <div class="row">
+            <div class="col-md-6" align="right">
+                <a href="/User/Login" class="btn btn-primary btn-lg">Giriş yap</a>
+            </div>
+            <div class="col-md-6">
+                <a href="/User/Register" class="btn btn-outline-secondary btn-lg">Kayıt Ol</a>
+            </div>
         </div>
-        <div class="col-md-6">
-            <a href="#" class="btn btn-outline-secondary btn-lg">Kayıt Ol</a>
-        </div>
-    </div>
+    }
+    else
+    {
+        {
+            Model m = new Model();
+            String ad = m.users.FirstOrDefault(x => x.email == HttpContext.Current.User.Identity.Name).firstname.ToString();
+            String soyad = m.users.FirstOrDefault(x => x.email == HttpContext.Current.User.Identity.Name).lastname.ToString();
+            <p>Hoşgeldin @ad @soyad </p>
+        }
+
+    }
     <div align="right">Listelenen kitap sayısı: @Model.Count</div>
 </div>
 

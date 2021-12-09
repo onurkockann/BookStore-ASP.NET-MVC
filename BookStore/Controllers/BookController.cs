@@ -11,7 +11,9 @@ namespace BookStore.Controllers
     {
         Model m = new Model();//Veritabanındaki tablolarda bulunan columnları modellemek ve manipüle etmek için her zaman kullanılacak olan geçici
                               //Model nesnesi global olarak tanımlandı.
+        
         // GET: Book
+        [AllowAnonymous]//Login olmamış kullanıcılara da görünmesi izin verilir.
         public ActionResult Detail(decimal? isbn)
         {
             book getKitap = m.books.FirstOrDefault(x => x.isbn == isbn);//Kitap aranıyor.

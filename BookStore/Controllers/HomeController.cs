@@ -12,6 +12,7 @@ namespace BookStore.Controllers
         Model m = new Model();//Veritabanındaki tablolarda bulunan columnları modellemek ve manipüle etmek için her zaman kullanılacak olan geçici
                               //Model sınıfını global olarak tanımlandı.
 
+        [AllowAnonymous]//Login olmamış kullanıcılara da görünmesi izin verilir.
         public ActionResult Index()
         {
             //Alert kodu incelemesi yapılıyor. Mevcut bir alert var ise ana sayfada kullanıcıya çıkartılıyor.
@@ -20,8 +21,8 @@ namespace BookStore.Controllers
             else if (TempData["1"] != null)
                 ViewBag.Done = TempData["1"];
 
+
             List<book> Kitaplar = m.books.ToList();
-            ViewBag.Testo = "sa";
 
             return View(Kitaplar);
         }
