@@ -101,5 +101,104 @@ namespace BookStore.Controllers
                 return RedirectToAction("Register");
             }
         }
+
+        // GET: Profil
+        public ActionResult Profil()
+        {
+            user u = m.users.FirstOrDefault(x => x.email == HttpContext.User.Identity.Name);//Sisteme login edilmiş kullanıcı varlığı.
+
+            if ((string)TempData["Y"] == "1")
+                ViewBag.DoneMsg = "Profil bilgileri başarıyla güncellendi.";
+            else if ((string)TempData["PwErr"] != null)
+                ViewBag.FailMsg = TempData["PwErr"];
+            else if ((string)TempData["PwDone"] != null)
+                ViewBag.DoneMsg = TempData["PwDone"];
+            else if ((string)TempData["PwOErr"] != null)
+                ViewBag.FailMsg = TempData["PwOErr"];
+            else if ((string)TempData["DG"] != null)
+                ViewBag.DoneMsg = TempData["DG"];
+            else if ((string)TempData["DGErr"] != null)
+                ViewBag.FailMsg = TempData["DGErr"];
+
+
+            return View(u);
+        }
+
+        [HttpGet]
+        public ActionResult GuncelleUser(int id)
+        {
+            user k = m.users.FirstOrDefault(x => x.userId == id);
+
+            if (k != null)//Kullanıcı var ise
+            {
+                if (k != m.users.FirstOrDefault(x=> x.email == HttpContext.User.Identity.Name))//Mevcut işlemi yapan kullanıcı değil ise;
+                {
+                    TempData["BG"] = "1";
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else//Kullanıcı yok ise, izinsiz erişim denemesi yapılmıştır.
+            {
+                TempData["BG"] = "1";
+                return RedirectToAction("Index", "Home");
+            }
+
+            if ((string)TempData["Y"] == "2")
+                ViewBag.FailMsg = "Bu maile sahip bir kullanıcı var.Lütfen başka bir mail adresi deneyin.";
+            else if ((string)TempData["MErr"] != null)
+                ViewBag.FailMsg = TempData["MErr"];
+
+            //Güvenlik caselerinden geçildikten sonra kullanıcı modeli güncelleme formuna gönderilir.
+            return View(k);
+        }
+
+        [HttpPost]
+        public ActionResult GuncelleUser(user kat)
+        {
+            user k = m.users.FirstOrDefault(x => x.userId == kat.userId);
+
+
+            user k2 = m.users.FirstOrDefault(x => x.email == kat.email && x.userId != kat.userId);
+            if (k2 == null) // email uygun.
+            {
+                k.email = kat.email;
+                k.firstname = kat.firstname;
+                k.lastname = kat.lastname;
+
+                m.SaveChanges();
+                FormsAuthentication.SetAuthCookie(kat.email, true);
+                TempData["Y"] = "1";
+                return RedirectToAction("Profil", "User");
+            }
+            else
+            {
+                TempData["Y"] = "2";
+                return RedirectToAction("GuncelleUser", new { id = kat.userId });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ChgPw(String pwold, String pwnew1, String pwnew2)
+        {
+            user u = m.users.FirstOrDefault(x => x.email == HttpContext.User.Identity.Name);//Login olmuş mevcut kullanıcı alınıyor.
+
+            if (!BCrypt.Net.BCrypt.Verify(pwold, u.password))//Onay için kullanıcı şifresini doğru girdimi?
+            {
+                TempData["PwOErr"] = "Eski şifrenizi yalnış girdiniz.";
+                return RedirectToAction("Profil");
+            }
+
+            if (pwnew1 != pwnew2)//İki defa girilen yeni şifreler birbirine eşitmi?
+            {
+                TempData["PwErr"] = "Yeni şifreler birbirine eşit değil.";
+                return RedirectToAction("Profil");
+            }
+
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(pwnew1);//Password hashlenir.
+            u.password = passwordHash;
+            m.SaveChanges();
+            TempData["PwDone"] = "Şifreniz başarıyla değiştirildi.";
+            return RedirectToAction("Profil");
+        }
     }
 }

@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "Profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Model m = new Model();
+    user u = m.users.FirstOrDefault(x => x.email == HttpContext.Current.User.Identity.Name);
+}
+@using BookStore.Models
+@model user
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Profil Detay</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <h3 class="profile-username text-center">@Model.firstname</h3>
+
+                        <p class="text-muted text-center">@Model.lastname</p>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Mail:</b> <a class="float-right">@Model.email</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Doğum Tarihi:</b> <a class="float-right">@Model.birthday</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- About Me Box -->
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Ayarlar</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="activity">
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form action="/User/ChgPw" method="post" role="form">
+                                                <label>Eski Şifre</label>
+                                                <input value="" class="form-control" type="password" name="pwold" maxlength="25" placeholder="Eski Şifre" required="" />
+                                                <br />
+                                                <label>Yeni Şifre</label>
+                                                <input value="" class="form-control" type="password" name="pwnew1" minlength="4" maxlength="25" placeholder="Yeni Şifre" required="" />
+                                                <br />
+                                                <label>Yeni Şifre Tekrar</label>
+                                                <input value="" class="form-control" type="password" name="pwnew2" minlength="4" maxlength="25" placeholder="Yeni Şifre Tekrar" required="" />
+                                                <br />
+                                                <div align="center">
+                                                    <input type="submit" class="btn btn-primary" value="Onayla" />
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>Şifrenizi değiştirmek için ilk kısma mevcut şifrenizi girin. Yeni şifrenizi onaylayarak 2 kere girdikten sonra şifre değiştirme işleminiz tamamlanır.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+<script>
+    function myFunction() {
+        document.getElementById("myP").style.visibility = "visible";
+        document.getElementById("hpd").style.visibility = "hidden";
+    }
+
+    function myFunctionV() {
+        document.getElementById("myP").style.visibility = "hidden";
+        document.getElementById("hpd").style.visibility = "visible";
+    }
+
+    function subFr(form) {
+        document.getElementById("buttonf").disabled = true;
+        form.submit();
+    }
+
+</script>

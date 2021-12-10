@@ -20,6 +20,8 @@ namespace BookStore.Controllers
                 ViewBag.Alert = TempData["0"];
             else if (TempData["1"] != null)
                 ViewBag.Done = TempData["1"];
+            else if (TempData["BG"] != null)
+                ViewBag.FailMsg = "İzinsiz erişim algılandı! Lütfen sayfalara ilgili bölümleri kullanarak erişin.";
 
 
             List<book> Kitaplar = m.books.ToList();

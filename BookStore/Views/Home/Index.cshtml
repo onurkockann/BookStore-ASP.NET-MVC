@@ -9,7 +9,7 @@
         <h1 class="display-5 fw-bold">Book Store</h1>
         <p class="col-md-8 fs-4">En yeni ve en popüler kitaplara ulaşabileceğiniz kaynağa hoşgeldiniz.</p>
     </div>
-    @if (@HttpContext.Current.User.Identity.Name == "")
+    @if (@HttpContext.Current.User.Identity.Name == "")//Login olan bir kullanıcı varmı? Yok ise ;
     {
         <div class="row">
             <div class="col-md-6" align="right">
@@ -20,7 +20,7 @@
             </div>
         </div>
     }
-    else
+    else // Login olan kullanıcı var ise giriş yap ve kayıt ol buttonları yerine hoşgeldiniz yazısı gösterilir;
     {
         {
             Model m = new Model();

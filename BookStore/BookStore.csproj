@@ -200,6 +200,7 @@
     <Content Include="Views\Author\Detail.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\User\Profil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
