@@ -23,7 +23,6 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
-
                 <!-- Profile Image -->
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
@@ -39,6 +38,14 @@
                                 <b>Doğum Tarihi:</b> <a class="float-right">@Model.birthday</a>
                             </li>
                         </ul>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="/User/GuncelleUser/@Model.userId" class="btn btn-primary">Düzenle</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="/User/Orders" class="btn btn-warning">Siparişlerim</a>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -50,42 +57,32 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header p-2">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Ayarlar</a></li>
-                        </ul>
+                        <h5>Şifreni değiştir</h5>
                     </div><!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="tab-content">
-                            <div class="active tab-pane" id="activity">
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <form action="/User/ChgPw" method="post" role="form">
-                                                <label>Eski Şifre</label>
-                                                <input value="" class="form-control" type="password" name="pwold" maxlength="25" placeholder="Eski Şifre" required="" />
-                                                <br />
-                                                <label>Yeni Şifre</label>
-                                                <input value="" class="form-control" type="password" name="pwnew1" minlength="4" maxlength="25" placeholder="Yeni Şifre" required="" />
-                                                <br />
-                                                <label>Yeni Şifre Tekrar</label>
-                                                <input value="" class="form-control" type="password" name="pwnew2" minlength="4" maxlength="25" placeholder="Yeni Şifre Tekrar" required="" />
-                                                <br />
-                                                <div align="center">
-                                                    <input type="submit" class="btn btn-primary" value="Onayla" />
-                                                </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form action="/User/ChgPw" method="post" role="form">
+                                        <label>Eski Şifre</label>
+                                        <input value="" class="form-control" type="password" name="pwold" maxlength="25" placeholder="Eski Şifre" required="" />
+                                        <br />
+                                        <label>Yeni Şifre</label>
+                                        <input value="" class="form-control" type="password" name="pwnew1" minlength="4" maxlength="25" placeholder="Yeni Şifre" required="" />
+                                        <br />
+                                        <label>Yeni Şifre Tekrar</label>
+                                        <input value="" class="form-control" type="password" name="pwnew2" minlength="4" maxlength="25" placeholder="Yeni Şifre Tekrar" required="" />
+                                        <br />
+                                        <div align="center">
+                                            <input type="submit" class="btn btn-primary" value="Onayla" />
+                                        </div>
 
-                                            </form>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>Şifrenizi değiştirmek için ilk kısma mevcut şifrenizi girin. Yeni şifrenizi onaylayarak 2 kere girdikten sonra şifre değiştirme işleminiz tamamlanır.</p>
-                                        </div>
-                                    </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Şifrenizi değiştirmek için ilk kısma mevcut şifrenizi girin. Yeni şifrenizi onaylayarak 2 kere girdikten sonra şifre değiştirme işleminiz tamamlanır.</p>
                                 </div>
                             </div>
                         </div>
-                        <!-- /.tab-content -->
-                    </div><!-- /.card-body -->
                 </div>
                 <!-- /.card -->
             </div>

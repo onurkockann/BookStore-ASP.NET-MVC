@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "GuncelleUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using BookStore.Models
+@model user
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3 class="title">Profil Bilgileri Formu</h3>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <a href="/Profil/Index" class="btn btn-danger btn-pri"><i class="fa fa-backward" aria-hidden="true"></i> Geri</a>
+            <div class="card-tools">
+            </div>
+        </div>
+        <div class="card-body" align="center">
+            <form action="/User/GuncelleUser" method="post" role="form" onsubmit="subFr()">
+                @if (Model != null)
+                {
+                    <input type="hidden" name="userId" value="@Model.userId" />
+                }
+                <div align="center" class="form-group col-md-6">
+                    <label>Ad</label>
+                    @if (Model.firstname == null)
+                    {
+                        <input value="" class="form-control" type="text" name="firstname" maxlength="20" placeholder="Ad" required="" style="border-block-color:red" />
+                    }
+                    else
+                    {
+                        <input value="@Model.firstname" class="form-control" type="text" name="firstname" maxlength="20" placeholder="Ad" required="" style="border-block-color:red" />
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div align="center" class="form-group col-md-6">
+                    <label>Soyad</label>
+                    @if (Model.lastname == null)
+                    {
+                        <input value="" class="form-control" type="text" name="lastname" maxlength="20" placeholder="Soyad" required="" style="border-block-color:red" />
+                    }
+                    else
+                    {
+                        <input value="@Model.lastname" class="form-control" type="text" name="lastname" maxlength="20" placeholder="Soyad" required="" style="border-block-color:red" />
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div align="center" class="form-group col-md-6">
+                    <label>Mail</label>
+                    @if (Model.email == null)
+                    {
+                        <input value="" class="form-control" type="email" name="email" maxlength="100" placeholder="Mail" required="" style="border-block-color:red"  />
+                    }
+                    else
+                    {
+                        <input value="@Model.email" class="form-control" type="email" name="email" maxlength="100" placeholder="Mail" required="" style="border-block-color:red" />
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="clearfix"> </div>
+                <div align="center" class="sub_home">
+                    <button type="submit" class="btn btn-primary" id="buttons">Kaydet</button>
+                    <div class="clearfix"> </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            Gerekli alanları boş bırakmayın.
+        </div>
+    </div>
+</section>
+
+<script>
+    function subFr() {
+        document.getElementById("buttons").disabled = true;
+    }
+</script>
+
+
