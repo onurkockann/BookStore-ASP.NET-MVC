@@ -218,5 +218,12 @@ namespace BookStore.Controllers
             List<orderedItem> siparisUruns = m.orderedItems.Where(x => x.orderId == id).ToList();
             return View(siparisUruns);
         }
+
+        public ActionResult MyCart()
+        {
+            user u = m.users.FirstOrDefault(x => x.email == HttpContext.User.Identity.Name);//Login olmuş mevcut kullanıcı alınıyor.
+            List<cart> sepet = m.carts.Where(x => x.userID == u.userId).ToList();
+            return View(sepet);
+        }
     }
 }

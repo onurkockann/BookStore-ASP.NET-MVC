@@ -153,6 +153,7 @@
     </Compile>
     <Compile Include="Models\author.cs" />
     <Compile Include="Models\book.cs" />
+    <Compile Include="Models\cart.cs" />
     <Compile Include="Models\creditCard.cs" />
     <Compile Include="Models\genre.cs" />
     <Compile Include="Models\Model.cs" />
@@ -204,6 +205,7 @@
     <Content Include="Views\User\GuncelleUser.cshtml" />
     <Content Include="Views\User\Orders.cshtml" />
     <Content Include="Views\User\OrderDetail.cshtml" />
+    <Content Include="Views\User\MyCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

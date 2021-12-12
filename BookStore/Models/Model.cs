@@ -14,6 +14,7 @@ namespace BookStore.Models
 
         public virtual DbSet<author> authors { get; set; }
         public virtual DbSet<book> books { get; set; }
+        public virtual DbSet<cart> carts { get; set; }
         public virtual DbSet<creditCard> creditCards { get; set; }
         public virtual DbSet<genre> genres { get; set; }
         public virtual DbSet<orderedItem> orderedItems { get; set; }
@@ -61,9 +62,18 @@ namespace BookStore.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<book>()
+                .HasMany(e => e.carts)
+                .WithOptional(e => e.book)
+                .HasForeignKey(e => e.bookID);
+
+            modelBuilder.Entity<book>()
                 .HasMany(e => e.orderedItems)
                 .WithRequired(e => e.book)
                 .HasForeignKey(e => e.bookId);
+
+            modelBuilder.Entity<cart>()
+                .Property(e => e.bookID)
+                .HasPrecision(13, 0);
 
             modelBuilder.Entity<creditCard>()
                 .Property(e => e.cardNumber)

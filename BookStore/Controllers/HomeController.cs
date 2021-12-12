@@ -12,6 +12,16 @@ namespace BookStore.Controllers
         Model m = new Model();//Veritabanındaki tablolarda bulunan columnları modellemek ve manipüle etmek için her zaman kullanılacak olan geçici
                               //Model sınıfını global olarak tanımlandı.
 
+        public void setCartCount()
+        {
+            user u = m.users.FirstOrDefault(x => x.email == HttpContext.User.Identity.Name);//Login olmuş mevcut kullanıcı alınıyor.
+            if (u != null)//Login olunmuş ise
+            {
+                //Kullanıcıya ait sepet varmı, var ise sayısını elde et.
+                ViewBag.cartPrCount = m.carts.Where(x => x.user.userId == u.userId).ToList().Count();
+            }
+        }
+
         [AllowAnonymous]//Login olmamış kullanıcılara da görünmesi izin verilir.
         public ActionResult Index()
         {
@@ -25,7 +35,7 @@ namespace BookStore.Controllers
 
 
             List<book> Kitaplar = m.books.ToList();
-
+            setCartCount();
             return View(Kitaplar);
         }
 

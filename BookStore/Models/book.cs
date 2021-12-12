@@ -11,6 +11,7 @@ namespace BookStore.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public book()
         {
+            carts = new HashSet<cart>();
             orderedItems = new HashSet<orderedItem>();
         }
 
@@ -44,6 +45,9 @@ namespace BookStore.Models
         public int? bodyCount { get; set; }
 
         public virtual author author1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cart> carts { get; set; }
 
         public virtual genre genre1 { get; set; }
 

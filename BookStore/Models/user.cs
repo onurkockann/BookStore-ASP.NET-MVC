@@ -11,6 +11,7 @@ namespace BookStore.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public user()
         {
+            carts = new HashSet<cart>();
             creditCards = new HashSet<creditCard>();
             orders = new HashSet<order>();
         }
@@ -37,6 +38,9 @@ namespace BookStore.Models
         public DateTime? birthday { get; set; }
 
         public int? isAdmin { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cart> carts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<creditCard> creditCards { get; set; }

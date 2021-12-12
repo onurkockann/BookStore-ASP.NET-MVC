@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Sepetim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using BookStore.Models
+@model List<cart>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Sepetim</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                <th>Ürün Resmi</th>
+                <th>Kitap adı</th>
+                <th>Fiyat(Güncel)</th>
+                <th>Adet</th>
+                <th>Kaldır</th>
+            </tr>
+            @foreach (cart item in Model)
+            {
+                <tr>
+                    <td><img src="@item.book.bImage" alt="..." style="width:15%;"></td>
+                    <td><a href="/Book/Detail?isbn=@item.book.isbn">@item.book.bName</a></td>
+                    <td>@item.book.price TL</td>
+                    <td>
+                        <input type="number" min="1" max="@item.book.stock" value="1"/>
+                    </td>
+                    <td><a href="/Book/SilCart?isbn=@item.book.isbn" class="btn btn-danger btn-md mr-1 mb-2">Sil</a></td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</section>
+
