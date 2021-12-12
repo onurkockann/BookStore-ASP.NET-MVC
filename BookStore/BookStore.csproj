@@ -202,6 +202,8 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Profil.cshtml" />
     <Content Include="Views\User\GuncelleUser.cshtml" />
+    <Content Include="Views\User\Orders.cshtml" />
+    <Content Include="Views\User\OrderDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

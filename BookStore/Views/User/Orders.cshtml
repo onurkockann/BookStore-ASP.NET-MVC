@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Siparişler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using BookStore.Models
+@model List<order>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Siparişlerim</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid"> 
+        <table class="table table-bordered">
+            <tr>
+                <th>Tarih</th>
+                <th>Toplam Tutar</th>
+                <th>Adres</th>
+                <th>Ürünler</th>
+            </tr>
+            @foreach (order item in Model)
+            {
+                <tr>
+                    <td>@item.dateAndTime</td>
+                    <td>@item.totalPrice TL</td>
+                    <td>@item.address</td>
+                    <td><a class="btn btn-info" href="/User/OrderDetail?id=@item.orderId">Detaya Git</a></td>
+                </tr>
+            }
+        </table>
+
+    </div>
+</section>
+

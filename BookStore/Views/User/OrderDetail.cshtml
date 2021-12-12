@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "Siparişler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using BookStore.Models
+@model List<orderedItem>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <br />
+                <a href="/User/Orders" class="btn btn-danger"><i class="fa fa-backward"></i> Geri</a>
+                <h3>@Convert.ToDateTime(Model.FirstOrDefault().order.dateAndTime).ToLongDateString() tarihine ait siparişin detayları;</h3>
+                <p>
+                    Toplam tutar = @Model.FirstOrDefault().order.totalPrice TL
+                    <br />
+                    Adres = @Model.FirstOrDefault().order.address
+                </p>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                <th>Ürün Resmi</th>
+                <th>Kitap adı</th>
+                <th>Yazar</th>
+                <th>Tür</th>
+                <th>Yayınevi</th>
+                <th>Fiyat(Güncel)</th>
+            </tr>
+            @foreach (orderedItem item in Model)
+            {
+                <tr>
+                    <td><img src="@item.book.bImage" alt="..." style="width:15%;"></td>
+                    <td><a href="/Book/Detail?isbn=@item.book.isbn">@item.book.bName</a></td>
+                    <td>@item.book.author1.aName</td>
+                    <td>@item.book.genre1.gName</td>
+                    <td>@item.book.publisher1.pName</td>
+                    <td>@item.book.price TL</td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</section>

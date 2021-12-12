@@ -200,5 +200,23 @@ namespace BookStore.Controllers
             TempData["PwDone"] = "Şifreniz başarıyla değiştirildi.";
             return RedirectToAction("Profil");
         }
+
+        public ActionResult Orders()
+        {
+            user u = m.users.FirstOrDefault(x => x.email == HttpContext.User.Identity.Name);//Login olmuş mevcut kullanıcı alınıyor.
+
+            //Kullanıcıya ait bütün siparişler elde ediliyor;
+            List<order> siparisler = m.orders.Where(x => x.userId == u.userId).ToList();
+            
+            return View(siparisler);
+        }
+
+        public ActionResult OrderDetail(int id)
+        {
+            //Order idsi gelen parametre ile bu orderı içeren ürünler elde ediliyor;
+            user u = m.users.FirstOrDefault(x => x.email == HttpContext.User.Identity.Name);//Login olmuş mevcut kullanıcı alınıyor.
+            List<orderedItem> siparisUruns = m.orderedItems.Where(x => x.orderId == id).ToList();
+            return View(siparisUruns);
+        }
     }
 }

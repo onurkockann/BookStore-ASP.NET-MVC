@@ -35,7 +35,7 @@
                                 <b>Mail:</b> <a class="float-right">@Model.email</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Doğum Tarihi:</b> <a class="float-right">@Model.birthday</a>
+                                <b>Doğum Tarihi:</b> <a class="float-right">@Convert.ToDateTime(Model.birthday).ToLongDateString()</a>
                             </li>
                         </ul>
                         <div class="row">
