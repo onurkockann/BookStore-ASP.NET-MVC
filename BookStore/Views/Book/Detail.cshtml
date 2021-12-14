@@ -57,15 +57,25 @@
         @if(Model.stock > 0)
         {
             <div class="container">
-                <div class="table-responsive mb-2">
-                    Adet
-                    <input class="quantity" min="1" max="@Model.stock" name="quantity" value="1" type="number">
-                </div>
-
-                <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Şimdi al</button>
-                <a href="/Book/AddCart?isbn=@Model.isbn" class="btn btn-light btn-md mr-1 mb-2">
-                    <i class="fas fa-shopping-cart pr-2"></i> Sepete ekle
-                </a>
+                @if(HttpContext.Current.User.Identity.Name != "")
+                {
+                    <form action="/Book/ConfirmPayout" method="get">
+                        <div class="table-responsive mb-2">
+                            Adet
+                            <input class="quantity" min="1" max="@Model.stock" name="quantity" value="1" type="number">
+                        </div>
+                        <input type="hidden" name="isbn" value="@Model.isbn"/>
+                        <button type="submit" class="btn btn-primary btn-md mr-1 mb-2">Şimdi al</button>
+                        <a href="/Book/AddCart?isbn=@Model.isbn" class="btn btn-light btn-md mr-1 mb-2">
+                            <i class="fas fa-shopping-cart pr-2"></i> Sepete ekle
+                        </a>
+                    </form>
+                }
+                else
+                {
+                    <p>Satın almak için lütfen <a href="/User/Login">giriş yapın</a> veya <a href="/User/Register">kayıt olun</a>.</p>
+                }
+                
             </div>
         }
         else

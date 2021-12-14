@@ -32,6 +32,7 @@
                 <th>Tür</th>
                 <th>Yayınevi</th>
                 <th>Fiyat(Güncel)</th>
+                <th>Adet</th>
             </tr>
             @foreach (orderedItem item in Model)
             {
@@ -42,6 +43,7 @@
                     <td>@item.book.genre1.gName</td>
                     <td>@item.book.publisher1.pName</td>
                     <td>@item.book.price TL</td>
+                    <td>@item.bookQty</td>
                 </tr>
             }
 

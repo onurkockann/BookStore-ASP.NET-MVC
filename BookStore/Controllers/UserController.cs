@@ -203,11 +203,14 @@ namespace BookStore.Controllers
 
         public ActionResult Orders()
         {
+            if (TempData["1"] != null)
+                ViewBag.DoneMsg = TempData["1"];
+
             user u = m.users.FirstOrDefault(x => x.email == HttpContext.User.Identity.Name);//Login olmuş mevcut kullanıcı alınıyor.
 
             //Kullanıcıya ait bütün siparişler elde ediliyor;
             List<order> siparisler = m.orders.Where(x => x.userId == u.userId).ToList();
-            
+            siparisler.Reverse();
             return View(siparisler);
         }
 
@@ -224,6 +227,17 @@ namespace BookStore.Controllers
             user u = m.users.FirstOrDefault(x => x.email == HttpContext.User.Identity.Name);//Login olmuş mevcut kullanıcı alınıyor.
             List<cart> sepet = m.carts.Where(x => x.userID == u.userId).ToList();
             return View(sepet);
+        }
+
+        public ActionResult ClearCart()
+        {
+            user u = m.users.FirstOrDefault(x => x.email == HttpContext.User.Identity.Name);//Login olmuş mevcut kullanıcı alınıyor.
+            List<cart> sepet = m.carts.Where(x => x.userID == u.userId).ToList();
+            m.carts.RemoveRange(sepet);
+            m.SaveChanges();
+
+            ViewBag.Done = "Sepetiniz başarıyla temizlendi.";
+            return View("MyCart",new List<cart>());
         }
     }
 }

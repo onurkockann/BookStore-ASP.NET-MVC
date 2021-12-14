@@ -1,5 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+
+    int bsCtr = 1;
 }
 @using BookStore.Models
 @model List<book>
@@ -38,6 +40,19 @@
     {
         <div class="col-md-4">
             <div class="card" style="width: 18rem;">
+                @if (ViewBag.Filter == "BS")
+                {
+                    <div class="card-header">
+                        En çok satan sıralaması = @bsCtr
+                    </div>
+                    bsCtr++;
+                }
+                else if (ViewBag.Filter == "NA")
+                {
+                    <div class="card-header">
+                        @Convert.ToDateTime(item.bDate).ToLongDateString() Tarihinde yayımlandı
+                    </div>
+                }
                 <img src="@item.bImage" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">@item.bName</h5>
@@ -47,7 +62,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <a href="/Book/Detail?isbn=@item.isbn" class="btn btn-primary">İncele</a>
-                            
+
                         </div>
                         <div class="col-md-6" align="right">
                             <strong>@item.price TL</strong>

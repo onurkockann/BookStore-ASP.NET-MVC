@@ -13,7 +13,7 @@ namespace BookStore.Controllers
                               //Model nesnesi global olarak tanımlandı.
                               // GET: Book
         
-        [AllowAnonymous]//Login olmamış kullanıcılara da görünmesi izin verilir.
+        
         public ActionResult Detail(int? id)
         {
             author getAuth = m.authors.FirstOrDefault(x => x.id == id);//Yazar aranıyor.

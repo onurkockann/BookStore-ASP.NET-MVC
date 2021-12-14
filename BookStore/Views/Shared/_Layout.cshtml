@@ -55,10 +55,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Yeni gelenler</a>
+                        <a class="nav-link" aria-current="page" href="/Home/NewArrivals">Yeni gelenler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">En çok satanlar</a>
+                        <a class="nav-link" href="/Home/BestSellers">En çok satanlar</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav media-right mb-2 mb-lg-0">
@@ -102,7 +102,7 @@
                             <i class="fa fa-user"></i>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @if (@HttpContext.Current.User.Identity.Name != "")
+                            @if (HttpContext.Current.User.Identity.Name != "")
                             {
                                 <li><a class="dropdown-item" href="/User/Profil">Profilim</a></li>
                                 <li><a class="dropdown-item" href="/User/Orders">Siparişlerim</a></li>
@@ -117,7 +117,6 @@
                             {
                                 <li><a class="dropdown-item" href="/User/Login">Giriş yap</a></li>
                                 <li><a class="dropdown-item" href="/User/Register">Kayıt ol</a></li>
-                                <li><a class="dropdown-item" href="#">Sepetim</a></li>
                             }
                         </ul>
                     </li>

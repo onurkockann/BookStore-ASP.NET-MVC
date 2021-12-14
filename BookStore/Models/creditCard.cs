@@ -18,7 +18,7 @@ namespace BookStore.Models
         [Column(TypeName = "date")]
         public DateTime expireDate { get; set; }
 
-        public int? balance { get; set; }
+        public double? balance { get; set; }
 
         public int userId { get; set; }
 

@@ -206,6 +206,7 @@
     <Content Include="Views\User\Orders.cshtml" />
     <Content Include="Views\User\OrderDetail.cshtml" />
     <Content Include="Views\User\MyCart.cshtml" />
+    <Content Include="Views\Book\ConfirmPayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

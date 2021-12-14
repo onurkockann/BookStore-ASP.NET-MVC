@@ -40,6 +40,7 @@ namespace BookStore.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]//Login olmamış kullanıcılara da görünmesi izin verilir.
         public ActionResult FindBook(String bookName)
         {
             //Aranma parametresine göre kitap adının içinde geçtiği SQL sorgusu uygulanıyor.
@@ -57,6 +58,7 @@ namespace BookStore.Controllers
             }
         }
 
+        [AllowAnonymous]//Login olmamış kullanıcılara da görünmesi izin verilir.
         public ActionResult FindKat(int id)
         {
             List<book> getKat = m.books.Where(x => x.genre1.id == id).ToList();//Parametre olarak gelen iddeki kategoriye sahip olan kitaplar.
@@ -74,6 +76,7 @@ namespace BookStore.Controllers
                 
         }
 
+        [AllowAnonymous]//Login olmamış kullanıcılara da görünmesi izin verilir.
         public ActionResult FindPubls(int id)
         {
             List<book> getKat = m.books.Where(x => x.publisher1.id == id).ToList();//Parametre olarak gelen iddeki yayınevine sahip olan kitaplar.
@@ -89,6 +92,26 @@ namespace BookStore.Controllers
                 return View("Index", getKat);
             }
 
+        }
+
+        [AllowAnonymous]//Login olmamış kullanıcılara da görünmesi izin verilir.
+        public ActionResult BestSellers()
+        {
+            List<book> getBooks = m.books.Where(x => x.bodyCount > 0).ToList();
+            getBooks = getBooks.OrderByDescending(x => x.bodyCount).ToList();
+            ViewBag.Filter = "BS";
+            ViewBag.Done = "Ürünler en iyi satanlara göre sıralandı";
+            return View("Index", getBooks);
+        }
+
+        [AllowAnonymous]//Login olmamış kullanıcılara da görünmesi izin verilir.
+        public ActionResult NewArrivals()
+        {
+            List<book> getBooks = m.books.ToList();
+            getBooks = getBooks.OrderByDescending(x => x.bDate).ToList();
+            ViewBag.Filter = "NA";
+            ViewBag.Done = "Ürünler en son yayınlanma tarihine göre sıralandı";
+            return View("Index", getBooks);
         }
     }
 }

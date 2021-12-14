@@ -16,6 +16,8 @@ namespace BookStore.Models
 
         public int orderId { get; set; }
 
+        public int? bookQty { get; set; }
+
         public virtual book book { get; set; }
 
         public virtual order order { get; set; }

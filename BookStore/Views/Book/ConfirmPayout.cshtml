@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Ödeme Onay Sayfası";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using BookStore.Models
+@model creditCard
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Ödeme paneli</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                <th>Ürün Resmi</th>
+                <th>Kitap adı</th>
+                <th>Fiyat(Güncel)</th>
+                <th>Adet</th>
+            </tr>
+            @foreach (book item in ViewBag.BookList)
+            {
+                <tr>
+                    <td><img src="@item.bImage" alt="..." style="width:15%;"></td>
+                    <td><a href="/Book/Detail?isbn=@item.isbn">@item.bName</a></td>
+                    <td>@item.price TL</td>
+                    <td>@item.stock</td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</section>
+
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="content-header">Ödeme özeti ve Kredi kartı bilgileri</h5>
+        </div>
+        <div class="card-body" align="center">
+            <form action="#" method="post" role="form" onsubmit="subFr()">
+                <div class="row">
+                    <div class="col-md-4" align="left">
+                        Teslim adresi<br />
+                        <textarea name="Adres" class="form-control" maxlength="999" required="" style="border-block-color:red"></textarea><br />
+                    </div>
+                    <div class="col-md-8">
+                        <div align="center" class="form-group col-md-6">
+                            <label>Kart numarası</label>
+                            <input value="" class="form-control" type="text" name="cardNumber" min="16" maxlength="16" placeholder="1234-5678-9012-3456" required="" style="border-block-color:red" />
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div align="center" class="form-group col-md-6">
+                            <div class="row">
+                                <div align="center" class="form-group col-md-6">
+                                    <label>CVV</label>
+                                    <input value="" class="form-control" type="text" name="cvv" required="" min="3" maxlength="3" placeholder="XXX" style="border-block-color:red" />
+                                    <div class="clearfix"> </div>
+                                </div>
+
+                                <div align="center" class="form-group col-md-6">
+                                    <label>Geçerlilik Tarihi</label>
+                                    <input value="" class="form-control" type="month" name="expireDate" required="" style="border-block-color:red" />
+                                    <div class="clearfix"> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <button type="submit" class="btn btn-primary">Ödemeyi onayla</button>
+            </form>
+        </div>
+        <div class="card-footer">
+            <strong>Toplam Fiyat:</strong> @ViewBag.TotalPrice TL
+        </div>
+    </div>
+</section>
+
+<script>
+    function subFr() {
+        if (confirm("Ödemeyi onaylıyormusunuz?")) {
+            document.getElementById("buttons").disabled = true;
+        }
+    }
+</script>
