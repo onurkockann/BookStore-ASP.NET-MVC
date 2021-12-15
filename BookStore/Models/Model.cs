@@ -124,6 +124,10 @@ namespace BookStore.Models
             modelBuilder.Entity<user>()
                 .Property(e => e.email)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<user>()
+                .Property(e => e.phone)
+                .HasPrecision(13, 0);
         }
     }
 }

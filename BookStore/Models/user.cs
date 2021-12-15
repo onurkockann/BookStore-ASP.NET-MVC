@@ -37,6 +37,9 @@ namespace BookStore.Models
         [Column(TypeName = "date")]
         public DateTime? birthday { get; set; }
 
+        [Column(TypeName = "numeric")]
+        public decimal? phone { get; set; }
+
         public int? isAdmin { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

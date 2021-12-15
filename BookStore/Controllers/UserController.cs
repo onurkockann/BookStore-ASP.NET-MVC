@@ -38,7 +38,10 @@ namespace BookStore.Controllers
             else//Login işlemi gerçekleşir.
             {
                 FormsAuthentication.SetAuthCookie(u.email, true);
-                return RedirectToAction("Index", "Home");
+                if (u.isAdmin != 1)
+                    return RedirectToAction("Index", "Home");
+                else
+                    return RedirectToAction("Index", "Admin");
             }
 
         }
@@ -164,6 +167,7 @@ namespace BookStore.Controllers
                 k.email = kat.email;
                 k.firstname = kat.firstname;
                 k.lastname = kat.lastname;
+                k.phone = kat.phone;
 
                 m.SaveChanges();
                 FormsAuthentication.SetAuthCookie(kat.email, true);

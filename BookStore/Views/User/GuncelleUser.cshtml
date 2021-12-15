@@ -57,11 +57,23 @@
                     <label>Mail</label>
                     @if (Model.email == null)
                     {
-                        <input value="" class="form-control" type="email" name="email" maxlength="100" placeholder="Mail" required="" style="border-block-color:red"  />
+                        <input value="" class="form-control" type="email" name="email" maxlength="100" placeholder="Mail" required="" style="border-block-color:red" />
                     }
                     else
                     {
                         <input value="@Model.email" class="form-control" type="email" name="email" maxlength="100" placeholder="Mail" required="" style="border-block-color:red" />
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div align="center" class="form-group col-md-6">
+                    <label>Telefon</label>
+                    @if (Model.phone == null)
+                    {
+                        <input value="" class="form-control" type="tel" name="phone" maxlength="13" placeholder="Mail" required="" style="border-block-color:red" />
+                    }
+                    else
+                    {
+                        <input value="@Model.phone" class="form-control" type="tel" name="phone" maxlength="13" placeholder="Mail" required="" style="border-block-color:red" />
                     }
                     <div class="clearfix"> </div>
                 </div>

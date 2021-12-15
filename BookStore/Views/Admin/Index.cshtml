@@ -1,0 +1,277 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+
+    int ntdrm = 0;
+    Model m = new Model();
+
+    List<order> gelirler = m.orders.ToList();
+
+    int[,] allValues = new int[32, 4];
+
+    foreach (order itemGe in gelirler)
+    {
+        DateTime getTarih = (DateTime)itemGe.dateAndTime;
+
+        TimeSpan ts = DateTime.Now.Subtract(getTarih);
+
+        int NumberOfDays = (int)ts.TotalDays;
+
+        if (NumberOfDays < 32)
+        {
+            allValues[NumberOfDays, 0] = NumberOfDays;
+            allValues[NumberOfDays, 1] += (int)itemGe.totalPrice;
+        }
+    }
+
+    ViewBag.uyeler = m.users.ToList().Count;
+    ViewBag.netDurum = gelirler.Sum(x => x.totalPrice);
+}
+@using BookStore.Models
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">@ViewBag.Title</h1>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+            </div>
+            <!-- ./col -->
+            <!-- small box -->
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@ViewBag.uyeler</h3>
+
+                        <p>Müşteri Sayısı</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Detaylı bilgi <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@ViewBag.netDurum TL</h3>
+
+                        <p>Toplam Ciro</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-money-bill"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Detaylı bilgi <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <div class="col-lg-7">
+                <!-- Custom tabs (Charts with tabs) style="height:200%;" -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Nakit Akışı
+                        </h3>
+                        <div class="card-tools">
+                            <ul class="nav nav-pills ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#" data-toggle="tab" onClick="otuzGun()">30 Gün</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-toggle="tab" onClick="odGun()">14 Gün</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                        <script type="text/javascript">
+                    google.charts.load('current', { 'packages': ['bar'] });
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+
+                        var dataRows = [['Günler', 'Gelir']];
+                        @{
+
+                            DateTime today = new DateTime();
+                            today = DateTime.Now;
+                            today = today.AddMonths(-1);
+
+                            TimeSpan tSp = DateTime.Now.Subtract(today);
+                            int gunSay = (int)tSp.TotalDays;
+
+                            int todayy = today.Day;
+                            int monthh = today.Month;
+                            int yearr = today.Year;
+
+                            for (int t = gunSay; t >= 0; t--) {
+                                <text>
+                                    dataRows.push(['@todayy/@monthh/@yearr', @allValues[t, 1]]);
+                                </text>
+                                ntdrm += allValues[t, 1];
+
+
+                                today = today.AddDays(+1);
+
+                                todayy = today.Day;
+                                monthh = today.Month;
+                                yearr = today.Year;
+                            }
+                        }
+
+                        var data = google.visualization.arrayToDataTable(dataRows);
+
+
+                        var options = {
+                            chart: {
+                                title: 'Son 30 güne ait gelir tablonuz',
+                                subtitle: '30 günlük akışta cironuz: @ntdrm.ToString() TL',
+                            }
+                        };
+
+                        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+                        chart.draw(data, google.charts.Bar.convertOptions(options));
+                    }
+
+
+                    function otuzGun() {
+
+                        google.charts.load('current', { 'packages': ['bar'] });
+                        google.charts.setOnLoadCallback(drawChart);
+
+                        function drawChart() {
+
+                            var dataRows = [['Günler', 'Gelir']];
+                            @{
+
+                                ntdrm = 0;
+
+                                today = new DateTime();
+                                today = DateTime.Now;
+                                today = today.AddMonths(-1);
+
+                                tSp = DateTime.Now.Subtract(today);
+                                gunSay = (int)tSp.TotalDays;
+
+                                todayy = today.Day;
+                                monthh = today.Month;
+                                yearr = today.Year;
+
+                                for (int t = gunSay; t >= 0; t--) {
+                                    <text>
+                                        dataRows.push(['@todayy/@monthh/@yearr', @allValues[t, 1]]);
+                                    </text>
+                                    ntdrm += allValues[t, 1];
+
+                                    today = today.AddDays(+1);
+
+                                    todayy = today.Day;
+                                    monthh = today.Month;
+                                    yearr = today.Year;
+                                }
+                            }
+
+                            var data = google.visualization.arrayToDataTable(dataRows);
+
+
+                            var options = {
+                                chart: {
+                                    title: 'Son 30 güne ait gelir tablonuz',
+                                    subtitle: '30 günlük akışta cironuz: @ntdrm.ToString() TL',
+                                }
+                            };
+
+                            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+                            chart.draw(data, google.charts.Bar.convertOptions(options));
+                        }
+
+                    }
+
+                    function odGun() {
+
+                        google.charts.load('current', { 'packages': ['bar'] });
+                        google.charts.setOnLoadCallback(drawChart);
+
+                        function drawChart() {
+
+                            var dataRows = [['Günler', 'Gelir']];
+                            @{
+                                ntdrm = 0;
+
+                                today = new DateTime();
+                                today = DateTime.Now;
+                                today = today.AddDays(-14);
+
+                                todayy = today.Day;
+                                monthh = today.Month;
+                                yearr = today.Year;
+
+                                for (int t = 14; t >= 0; t--) {
+                                    <text>
+                                        dataRows.push(['@todayy/@monthh/@yearr', @allValues[t, 1]]);
+                                    </text>
+                                    ntdrm += allValues[t, 1];
+
+
+                                    today = today.AddDays(+1);
+
+                                    todayy = today.Day;
+                                    monthh = today.Month;
+                                    yearr = today.Year;
+                                }
+                            }
+
+                            var data = google.visualization.arrayToDataTable(dataRows);
+
+
+                            var options = {
+                                chart: {
+                                    title: 'Son 2 haftaya ait gelir tablonuz',
+                                    subtitle: '2 haftalık akışta cironuz: @ntdrm.ToString() TL',
+                                }
+                            };
+
+                            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+                            chart.draw(data, google.charts.Bar.convertOptions(options));
+                        }
+
+                    }
+
+                        </script>
+                        <div id="columnchart_material" style="width:100%; height:400px;" align="center"></div>
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- DIRECT CHAT -->
+            </div>
+        </div>
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+</section>
+

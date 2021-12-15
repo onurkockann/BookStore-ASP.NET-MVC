@@ -45,7 +45,7 @@
             <h5 class="content-header">Ödeme özeti ve Kredi kartı bilgileri</h5>
         </div>
         <div class="card-body" align="center">
-            <form action="#" method="post" role="form" onsubmit="subFr()">
+            <form action="#" method="post" role="form" onSubmit="return confirm('Ödeme işlemine devam edilecek, onaylıyormusunuz?');">
                 <div class="row">
                     <div class="col-md-4" align="left">
                         Teslim adresi<br />
@@ -83,11 +83,3 @@
         </div>
     </div>
 </section>
-
-<script>
-    function subFr() {
-        if (confirm("Ödemeyi onaylıyormusunuz?")) {
-            document.getElementById("buttons").disabled = true;
-        }
-    }
-</script>

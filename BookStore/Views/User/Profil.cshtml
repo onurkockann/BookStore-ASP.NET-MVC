@@ -32,10 +32,13 @@
 
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
-                                <b>Mail:</b> <a class="float-right">@Model.email</a>
+                                <b>Mail:</b> @Model.email
                             </li>
                             <li class="list-group-item">
-                                <b>Doğum Tarihi:</b> <a class="float-right">@Convert.ToDateTime(Model.birthday).ToLongDateString()</a>
+                                <b>Telefon:</b> @Model.phone
+                            </li>
+                            <li class="list-group-item">
+                                <b>Doğum Tarihi:</b> @Convert.ToDateTime(Model.birthday).ToLongDateString()
                             </li>
                         </ul>
                         <div class="row">

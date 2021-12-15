@@ -28,7 +28,7 @@ namespace BookStore.Controllers
             }
         }
 
-        public ActionResult AddCart(decimal? isbn)
+        public ActionResult AddCart(decimal? isbn, int? quantity)
         {
             user u = m.users.FirstOrDefault(x => x.email == HttpContext.User.Identity.Name);//Login olmuş mevcut kullanıcı alınıyor.
             cart checkCart = m.carts.FirstOrDefault(x => x.bookID == isbn && x.userID == u.userId);
@@ -42,6 +42,7 @@ namespace BookStore.Controllers
                 cart nCart = new cart();
                 nCart.userID = u.userId;
                 nCart.bookID = isbn;
+                nCart.quantity = quantity;
                 m.carts.Add(nCart);
                 m.SaveChanges();
 
@@ -72,13 +73,15 @@ namespace BookStore.Controllers
         [HttpGet]
         public ActionResult ConfirmPayout(decimal[] isbn, int[] quantity)
         {
+            if (TempData["isbn"] != null || TempData["quantity"] != null)
+            {
+                isbn = (decimal[])TempData["isbn"];
+                quantity = (int[])TempData["quantity"]; 
+            }
+
             //Sayfada bir uyarı mesajı mevcutmu kontrolü
             if (TempData["0"] != null)
-            {
                 ViewBag.FailMsg = TempData["0"];
-                isbn = (decimal[])TempData["isbn"];
-                quantity = (int[])TempData["quantity"];
-            }
                 
 
             List<book> getBooks = new List<book>();//Boş bir kitap modeli listesi oluşturuluyor.
@@ -96,28 +99,38 @@ namespace BookStore.Controllers
             ViewBag.TotalPrice = totPrice;//Frontende gönderilmek üzere toplam fiyatı ata.
             ViewBag.BookList = getBooks;//Sipariş edilecek kitap(lar) gönderiliyor.
             creditCard card = new creditCard();//Kredi kartı bilgileri isteneceğinden dolayı boş bir kredi kartı nesnesi oluştur.
+            TempData["isbn"] = isbn;
+            TempData["quantity"] = quantity;
+
             return View(card);
         }
 
         [HttpPost]
         public ActionResult ConfirmPayout(decimal[] isbn, int[] quantity, creditCard card, String Adres)
         {
+            if (TempData["isbn"] != null || TempData["quantity"] != null)
+            {
+                isbn = (decimal[])TempData["isbn"];
+                quantity = (int[])TempData["quantity"];
+            }
+            int[] tempQty = new int[quantity.Length];//Herhangi bir geriyedönüş durumunda veri aktarımı için sipariş edilen ürün adetlerini tutar.
             List<book> getBooks = new List<book>();//Boş bir kitap modeli listesi oluşturuluyor.
 
             //STOK KONTROLU VE SATIN ALINACAK KITAPLARIN ADETLERIYLE BIRLIKTE ELDE EDILMESI;
             int stkCounter = 0; //adet,stoğa uyum sağlamayan bir kitap olduğunda tetikleme yapılması için.
             int qtCount = 0;//kitaplarla birlikte adetlerinde elde edilmesi için bir indis olusturuluyor.
-            int tempStk = 0;//Stok değerini kaybetmemek için geçici değişken.
             double totPrice = 0;//Toplam fiyat
+            int tempStk = 0;//Stok değerini kaybetmemek için geçici değişken.
             foreach (decimal item in isbn)//Gelen kitap isbnleri içinde gezerek;
             {
                 getBooks.Add(m.books.FirstOrDefault(x => x.isbn == item));//isbne sahip kitabı ekle
                 if (getBooks[qtCount].stock >= quantity[qtCount])
                 {
+                    tempQty[qtCount] = quantity[qtCount];//Ürünlerin sipariş adeti,data aktarımı için temp dizisine atılıyor.
                     tempStk = (int)getBooks[qtCount].stock;//Mevcut stok adeti tutuluyor.
                     getBooks[qtCount].stock = quantity[qtCount];//sipariş adeti
                     totPrice += Convert.ToDouble(getBooks[qtCount].price) * quantity[qtCount];//Toplam fiyata ekle
-
+                    
                     quantity[qtCount] = tempStk;//quantity listesi, asıl stok adeti için kullanıma geçiriliyor.
                     qtCount++;
                 }
@@ -128,8 +141,8 @@ namespace BookStore.Controllers
             {
                 TempData["0"] = "Stok yetersiz, lütfen tekrar deneyin veya adet güncellemesi yapın.";
                 TempData["isbn"] = isbn;
-                TempData["quantity"] = quantity;
-                return RedirectToAction("ConfirmPayout");
+                TempData["quantity"] = tempQty;
+                return RedirectToAction("ConfirmPayout", "Book");
             }
 
 
@@ -144,8 +157,8 @@ namespace BookStore.Controllers
                 {
                     TempData["0"] = "Kredi kartınızın bakiyesi yetersiz.";
                     TempData["isbn"] = isbn;
-                    TempData["quantity"] = quantity;
-                    return RedirectToAction("ConfirmPayout");
+                    TempData["quantity"] = tempQty;
+                    return RedirectToAction("ConfirmPayout","Book");
                 }
 
                 order siparis = new order();
@@ -165,16 +178,19 @@ namespace BookStore.Controllers
                     siparisUruns.bookQty = item.stock;
                     m.orderedItems.Add(siparisUruns);
 
-                    //Kitap üzerinde yapılacak değişiklikler için varlığın kendisi elde edilir.
-                    book getBook = m.books.FirstOrDefault(x => x.isbn == item.isbn);
-                    getBook.stock = quantity[stkCounter] - getBook.stock;//Sipariş adeti kadar stok düşürülür.
-                    getBook.bodyCount += 1;
+                    //Kitap üzerinde yapılacak değişiklikler için varlığın kendisi elde edilir.(Sipariş onayından sonra)
+                    //book getBook = m.books.FirstOrDefault(x => x.isbn == item.isbn);
+                    //getBook.stock = quantity[stkCounter] - getBook.stock;//Sipariş adeti kadar stok düşürülür.
+                    //getBook.bodyCount += 1;
+                    
+                    m.books.FirstOrDefault(x => x.isbn == item.isbn).stock = quantity[stkCounter];//Gerçek stok değeri geri konuluyor.
+
                     stkCounter++;
 
                     m.SaveChanges();
                 }
 
-                KK.balance -= Convert.ToDouble(totPrice);//Kredi kartının bakiyesi düşürülüyor.
+                //KK.balance -= Convert.ToDouble(totPrice);//Kredi kartının bakiyesi düşürülüyor.(Sipariş onayından sonra)
 
                 m.SaveChanges();
                 TempData["1"] = "Siparişiniz başarıyla onaylanmıştır.";
@@ -184,9 +200,31 @@ namespace BookStore.Controllers
             {
                 TempData["0"] = "Kredi kartı bilgileriniz doğrulanamadı. Lütfen kart bilgilerinizi doğru girerek tekrar deneyin.";
                 TempData["isbn"] = isbn;
-                TempData["quantity"] = quantity;
-                return RedirectToAction("ConfirmPayout");
+                TempData["quantity"] = tempQty;
+                return RedirectToAction("ConfirmPayout", "Book");
             }
+        }
+
+        public ActionResult ProceedCart()
+        {
+            user u = m.users.FirstOrDefault(x => x.email == HttpContext.User.Identity.Name);//Login olmuş mevcut kullanıcı alınıyor.
+            List<cart> sepet = m.carts.Where(x => x.userID == u.userId).ToList();
+
+            decimal[] isbn = new decimal[sepet.Count];
+            int[] quantity = new int[sepet.Count];
+
+            int i = 0;
+            foreach (cart item in sepet)
+            {
+                isbn[i] = (decimal)item.bookID;
+                quantity[i] = (int)item.quantity;
+                i++;
+            }
+
+            TempData["isbn"] = isbn;
+            TempData["quantity"] = quantity;
+
+            return RedirectToAction("ConfirmPayout","Book");
         }
     }
 }

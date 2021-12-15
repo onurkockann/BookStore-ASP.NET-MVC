@@ -16,13 +16,14 @@
 </section>
 
 <section class="content">
-    <div class="container-fluid"> 
+    <div class="container-fluid">
         <table class="table table-bordered">
             <tr>
                 <th>Tarih</th>
                 <th>Toplam Tutar</th>
                 <th>Adres</th>
                 <th>Ürünler</th>
+                <th>Durum</th>
             </tr>
             @foreach (order item in Model)
             {
@@ -31,10 +32,23 @@
                     <td>@item.totalPrice TL</td>
                     <td>@item.address</td>
                     <td><a class="btn btn-info" href="/User/OrderDetail?id=@item.orderId">Detaya Git</a></td>
+                    <td>
+                        @if (item.status == 0)
+                        {
+                            <span class="badge alert-danger">Beklemede</span>
+                            <form action="/Order/CancelOrder" method="post" role="form" onSubmit="return confirm('Siparişiniz iptal edilecek, devam edilsinmi?');">
+                                <input type="hidden" name="id" value="@item.orderId" />
+                                <input type="submit" class="btn btn-danger" value="İptal et">
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="badge alert-success">Onaylandı</span>
+                        }
+                    </td>
                 </tr>
             }
         </table>
 
     </div>
 </section>
-

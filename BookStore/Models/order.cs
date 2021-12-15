@@ -26,6 +26,8 @@ namespace BookStore.Models
         [StringLength(1000)]
         public string address { get; set; }
 
+        public int status { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<orderedItem> orderedItems { get; set; }
 
