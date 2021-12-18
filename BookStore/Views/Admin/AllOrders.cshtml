@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "AllOrders";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+
+    int tempId = 0;//Ordereditem içinde aynı orderlar için birden fazla defa dönülmemesi için kontrol değişkeni.
+    Model m = new Model();
+}
+@using BookStore.Models
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Siparişler</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <table class="table table-bordered">
+            <tr>
+                <th>Sipariş tarihi</th>
+                <th>Toplam fiyat</th>
+                <th>Adres</th>
+                <th>Ad / Soyad</th>
+                <th>E-Mail / Telefon</th>
+                <th>Ürünler</th>
+                <th>Aksiyon</th>
+            </tr>
+            @foreach (orderedItem item in ViewBag.Orders)
+            {
+                if (tempId != item.orderId)
+                {
+                    tempId = item.orderId;
+                    <tr>
+                        <td>@item.order.dateAndTime</td>
+                        <td>@item.order.totalPrice</td>
+                        <td>@item.order.address</td>
+                        <td>@item.order.user.firstname / @item.order.user.lastname</td>
+                        <td>@item.order.user.email / @item.order.user.phone</td>
+                        <td>
+                            @foreach(orderedItem itemx in m.orderedItems.Where(x=> x.orderId == tempId).ToList())
+                            {
+                                <h5>
+                                    <a href="/Book/Detail?isbn=@itemx.book.isbn" target="_blank">
+                                        @itemx.book.bName
+                                    </a>
+                                    (@itemx.book.price TL x @itemx.bookQty adet),<br />
+                                </h5>
+                            }
+                        </td>
+                        @if (item.order.status == 1)
+                        {
+                            <td><span class="badge alert-success">Onaylandı</span></td>
+                        }
+                        else
+                        {
+                            <td>
+                                <span class="badge alert-warning">Onayla</span>
+                                <span class="badge alert-danger">İptal et</span>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</section>
+
+
+

@@ -16,12 +16,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Book Store", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Book Store - Admin", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Ana sayfa", "Index", "Admin")</li>
-
+                    <li>@Html.ActionLink("Yazarlar", "Yazarlar", "Admin")</li>
+                    <li>@Html.ActionLink("Kitaplar", "Kitaplar", "Admin")</li>
+                    <li>@Html.ActionLink("Kategoriler", "Kategoriler", "Admin")</li>
+                    <li>@Html.ActionLink("Yayinevleri", "Yayinevleri", "Admin")</li>
                 </ul>
                 @if (@HttpContext.Current.User.Identity.Name != "")
                 {

@@ -211,6 +211,12 @@
     <Content Include="Views\Book\ConfirmPayout.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
+    <Content Include="Views\Admin\AllOrders.cshtml" />
+    <Content Include="Views\Admin\Yazarlar.cshtml" />
+    <Content Include="Views\Admin\Kitaplar.cshtml" />
+    <Content Include="Views\Admin\Kategoriler.cshtml" />
+    <Content Include="Views\Admin\Yayinevleri.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+@using BookStore.Models
+@model user
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Kayıtlı müşteriler</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <table class="table table-bordered">
+            <tr>
+                <th>Ad/Soyad</th>
+                <th>E-Mail</th>
+                <th>Telefon numarası</th>
+            </tr>
+            @foreach (user item in ViewBag.Users)
+            {
+                <tr>
+                    <td>@item.firstname  @item.lastname</td>
+                    <td>@item.email</td>
+                    <td>@item.phone</td>
+                </tr>
+            }
+        </table>
+    </div>
+</section>
+

@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Kitaplar";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+@using BookStore.Models
+@model book
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Kitaplar</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <table class="table table-bordered">
+            <tr>
+                <th>Resim</th>
+                <th>Kitap adı</th>
+                <th>Yazar</th>
+                <th>Tür</th>
+                <th>Yayınevi</th>
+                <th>Fiyat</th>
+                <th>Stok</th>
+                <th>Satış sayısı</th>
+                <th>Sil</th>
+            </tr>
+            @foreach (book item in ViewBag.Kitaplar)
+            {
+                <tr>
+                    <td><img src="@item.bImage" alt="..." style="width:15%;"></td>
+                    <td>
+                        <a href="/Book/Detail?isbn=@item.isbn" target="_blank">
+                            @item.bName
+                        </a>
+                    </td>
+                    <td>@item.author1.aName</td>
+                    <td>@item.genre1.gName</td>
+                    <td>@item.publisher1.pName</td>
+                    <td>@item.price TL</td>
+                    <td>@item.stock</td>
+                    <td>@item.bodyCount</td>
+                    <td>Sil</td>
+                </tr>
+            }
+        </table>
+    </div>
+</section>
+
+

@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Kategoriler";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+@using BookStore.Models
+@model genre
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Kategoriler</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <table class="table table-bordered">
+            <tr>
+                <th>Kategori adı</th>
+                <th>Açıklama</th>
+                <th>Sil</th>
+            </tr>
+            @foreach (genre item in ViewBag.Kategoriler)
+            {
+                <tr>
+                    <td>@item.gName</td>
+                    <td>@item.gDescription</td>
+                    <td>Sil</td>
+                </tr>
+            }
+        </table>
+    </div>
+</section>
+
+

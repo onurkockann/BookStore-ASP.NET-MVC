@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Yayinevleri";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+@using BookStore.Models
+@model publisher
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Yayınevleri</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <table class="table table-bordered">
+            <tr>
+                <th>Yayınevi adı</th>
+                <th>Logo</th>
+                <th>Sil</th>
+            </tr>
+            @foreach (publisher item in ViewBag.Yayinevleri)
+            {
+                <tr>
+                    <td>@item.pName</td>
+                    <td><img src="@item.pLogo" alt="..." style="width:15%;"></td>
+                    <td>Sil</td>
+                </tr>
+            }
+        </table>
+    </div>
+</section>
+
