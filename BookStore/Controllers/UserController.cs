@@ -71,7 +71,7 @@ namespace BookStore.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Register(user kat, String pwt, String KVKK)
+        public ActionResult Register(user kat, String pwt, String KVKK, String Admin)
         {
             if (kat.password != pwt) // Onay için tekrar istenen şifreler birbirine eşitmi kontrolü
             {
@@ -90,6 +90,8 @@ namespace BookStore.Controllers
                 kat.isAdmin = 0;//Normal yollar ile kayıt olan kullanıcılar admin olamaz bundan dolayı adminlik yetkisi 0 verilir.
                 string passwordHash = BCrypt.Net.BCrypt.HashPassword(kat.password);//Password hashlenir.
                 kat.password = passwordHash;
+                if (Admin != null && Admin == "ok")
+                    kat.isAdmin = 1;
 
                 m.users.Add(kat);
                 FormsAuthentication.SetAuthCookie(kat.email, true);
@@ -168,6 +170,7 @@ namespace BookStore.Controllers
                 k.firstname = kat.firstname;
                 k.lastname = kat.lastname;
                 k.phone = kat.phone;
+                k.birthday = kat.birthday;
 
                 m.SaveChanges();
                 FormsAuthentication.SetAuthCookie(kat.email, true);

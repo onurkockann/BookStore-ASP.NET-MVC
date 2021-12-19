@@ -27,9 +27,9 @@ namespace BookStore.Controllers
         {
             //Alert kodu incelemesi yapılıyor. Mevcut bir alert var ise ana sayfada kullanıcıya çıkartılıyor.
             if (TempData["0"] != null)
-                ViewBag.Alert = TempData["0"];
+                ViewBag.FailMsg = TempData["0"];
             else if (TempData["1"] != null)
-                ViewBag.Done = TempData["1"];
+                ViewBag.DoneMsg = TempData["1"];
             else if (TempData["BG"] != null)
                 ViewBag.FailMsg = "İzinsiz erişim algılandı! Lütfen sayfalara ilgili bölümleri kullanarak erişin.";
 

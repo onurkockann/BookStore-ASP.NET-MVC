@@ -57,7 +57,18 @@
                 <div class="card-body">
                     <h5 class="card-title">@item.bName</h5>
                     <p class="card-text">
-                        @item.detail.Substring(0, 150).ToString()@Html.ActionLink("....", "Detail", "Book", new { isbn = item.isbn }, null)
+                        @if (item.detail != null)
+                        {
+                            if (item.detail.Length >= 150)
+                            {
+                                @item.detail.Substring(0, 150).ToString()@Html.ActionLink("....", "Detail", "Book", new { isbn = item.isbn }, null)
+                            }
+                            else
+                            {
+                                @item.detail
+                            }
+                        }
+
                     </p>
                     <div class="row">
                         <div class="col-md-6">

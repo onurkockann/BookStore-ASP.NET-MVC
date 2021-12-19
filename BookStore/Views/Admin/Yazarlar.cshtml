@@ -22,7 +22,7 @@
                 <th>Resim</th>
                 <th>Yazar adı</th>
                 <th>Açıklama</th>
-                <th>Sil</th>
+                <th>İşlem</th>
             </tr>
             @foreach (author item in ViewBag.Yazarlar)
             {
@@ -34,10 +34,120 @@
                         </a>
                     </td>
                     <td>@item.aDescription</td>
-                    <td>Sil</td>
+                    <td>
+                        <span class="badge alert-warning">
+                            @Html.ActionLink("Düzenle", "Update", "Admin", new { op = 1, id = item.id }, null)
+                        </span>
+                        <span class="badge alert-danger">
+                            <a href="#" class="tdrSil" data-tdrid="@item.id">Sil</a>
+                        </span>
+                    </td>
                 </tr>
             }
         </table>
     </div>
 </section>
+<hr />
+<section class="content">
+    <div class="card">
+        <div class="card-header"> 
+            <h3 class="title">Yazar Ekle</h3>
+        </div>
+        <div class="card-body" align="center">
+            <form action="/Admin/EkleYazar" method="post" role="form" onsubmit="subFr()">
+                @if (Model != null)
+                {
+                    <input type="hidden" name="id" value="@Model.id" />
+                }
+                <div align="center" class="form-group col-md-6">
+                    <label>Ad</label>
+                    @if (Model.aName == null)
+                    {
+                        <input value="" class="form-control" type="text" name="aName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                    }
+                    else
+                    {
+                        <input value="@Model.aName" class="form-control" type="text" name="aName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div align="center" class="form-group col-md-6">
+                    <label>Açıklama</label>
+                    @if (Model.aDescription == null)
+                    {
+                        <input value="" class="form-control" type="text" name="aDescription" maxlength="1200" placeholder="Açıklama"/>
+                    }
+                    else
+                    {
+                        <input value="@Model.aDescription" class="form-control" type="text" name="aDescription" maxlength="1200" placeholder="Açıklama"/>
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div align="center" class="form-group col-md-6">
+                    <label>Resim link</label>
+                    @if (Model.aImage == null)
+                    {
+                        <input value="" class="form-control" type="text" name="aImage" maxlength="100" placeholder="Resim link"/>
+                    }
+                    else
+                    {
+                        <input value="@Model.aImage" class="form-control" type="text" name="aImage" maxlength="100" placeholder="Resim link"/>
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div align="center" class="form-group col-md-6">
+                    <label>Wiki link</label>
+                    @if (Model.aLink == null)
+                    {
+                        <input value="" class="form-control" type="text" name="aLink" maxlength="100" placeholder="Wiki link"/>
+                    }
+                    else
+                    {
+                        <input value="@Model.aLink" class="form-control" type="text" name="aLink" maxlength="100" placeholder="Wiki link"/>
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="clearfix"> </div>
+                <br />
+                <div align="center" class="sub_home">
+                    <button type="submit" class="btn btn-primary" id="buttons">Kaydet</button>
+                    <div class="clearfix"> </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            Gerekli alanları boş bırakmayın
+        </div>
+    </div>
+</section>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(".tdrSil").click(function () {
+        var sonuc = confirm("Yazar silinecek, işleme devam edilsinmi?");
+        if (sonuc) {
+            var tdrId = $(this).data("tdrid");
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/Admin/YazarSil/" + tdrId,
+                    success: function () {
+                        alert("Yazar başarıyla kaldırıldı.");
+                        window.location.replace("/Admin/Yazarlar");
+                    },
+                    error: function () {
+                        alert("Yazar kaldırılmaya çalışırken bir hata oluştu");
+                    }
+                });
+        }
+
+        else {
+            alert("İşlem iptal edildi");
+
+        }
+    }
+    );
+
+</script>
 

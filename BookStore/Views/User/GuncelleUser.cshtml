@@ -77,7 +77,19 @@
                     }
                     <div class="clearfix"> </div>
                 </div>
-                <div class="clearfix"> </div>
+                <div align="center" class="form-group col-md-6">
+                    <label>Doğum Tarihi</label>
+                    @if (Model.birthday == null)
+                    {
+                        <input value="" class="form-control" type="date" name="birthday" maxlength="100"/>
+                    }
+                    else
+                    {
+                        <input value="@Model.birthday" class="form-control" type="text" name="birthday" maxlength="100"/>
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <br />
                 <div align="center" class="sub_home">
                     <button type="submit" class="btn btn-primary" id="buttons">Kaydet</button>
                     <div class="clearfix"> </div>

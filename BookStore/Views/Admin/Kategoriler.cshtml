@@ -21,17 +21,102 @@
             <tr>
                 <th>Kategori adı</th>
                 <th>Açıklama</th>
-                <th>Sil</th>
+                <th>İşlem</th>
             </tr>
             @foreach (genre item in ViewBag.Kategoriler)
             {
                 <tr>
                     <td>@item.gName</td>
                     <td>@item.gDescription</td>
-                    <td>Sil</td>
+                    <td>
+                        <span class="badge alert-warning">
+                            @Html.ActionLink("Düzenle", "Update", "Admin", new { op = 3, id = item.id }, null)
+                        </span>
+                        <span class="badge alert-danger">
+                            <a href="#" class="tdrSil" data-tdrid="@item.id">Sil</a>
+                        </span>
+                    </td>
                 </tr>
             }
         </table>
+    </div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(".tdrSil").click(function () {
+        var sonuc = confirm("Kategori silinecek, işleme devam edilsinmi?");
+        if (sonuc) {
+            var tdrId = $(this).data("tdrid");
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/Admin/KategoriSil/" + tdrId,
+                    success: function () {
+                        alert("Kategori başarıyla kaldırıldı.");
+                        window.location.replace("/Admin/Kategoriler");
+                    },
+                    error: function () {
+                        alert("Kategori kaldırılmaya çalışırken bir hata oluştu");
+                    }
+                });
+        }
+
+        else {
+            alert("İşlem iptal edildi");
+
+        }
+    }
+    );
+
+</script>
+<hr />
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="title">Kategori Ekle</h3>
+        </div>
+        <div class="card-body" align="center">
+            <form action="/Admin/EkleKategori" method="post" role="form" onsubmit="subFr()">
+                @if (Model != null)
+                {
+                    <input type="hidden" name="id" value="@Model.id" />
+                }
+                <div align="center" class="form-group col-md-6">
+                    <label>Ad</label>
+                    @if (Model.gName == null)
+                    {
+                        <input value="" class="form-control" type="text" name="gName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                    }
+                    else
+                    {
+                        <input value="@Model.gName" class="form-control" type="text" name="gName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div align="center" class="form-group col-md-6">
+                    <label>Açıklama</label>
+                    @if (Model.gDescription == null)
+                    {
+                        <input value="" class="form-control" type="text" name="gDescription" maxlength="200" placeholder="Açıklama" />
+                    }
+                    else
+                    {
+                        <input value="@Model.gDescription" class="form-control" type="text" name="gDescription" maxlength="200" placeholder="Açıklama" />
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="clearfix"> </div>
+                <br />
+                <div align="center" class="sub_home">
+                    <button type="submit" class="btn btn-primary" id="buttons">Kaydet</button>
+                    <div class="clearfix"> </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            Gerekli alanları boş bırakmayın
+        </div>
     </div>
 </section>
 

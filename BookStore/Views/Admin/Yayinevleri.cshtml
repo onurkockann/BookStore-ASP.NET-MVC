@@ -21,17 +21,102 @@
             <tr>
                 <th>Yayınevi adı</th>
                 <th>Logo</th>
-                <th>Sil</th>
+                <th>İşlem</th>
             </tr>
             @foreach (publisher item in ViewBag.Yayinevleri)
             {
                 <tr>
                     <td>@item.pName</td>
                     <td><img src="@item.pLogo" alt="..." style="width:15%;"></td>
-                    <td>Sil</td>
+                    <td>
+                        <span class="badge alert-warning">
+                            @Html.ActionLink("Düzenle", "Update", "Admin", new { op = 4, id = item.id }, null)
+                        </span>
+                        <span class="badge alert-danger">
+                            <a href="#" class="tdrSil" data-tdrid="@item.id">Sil</a>
+                        </span>
+                    </td>
                 </tr>
             }
         </table>
     </div>
 </section>
+<hr />
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="title">Yayınevi Ekle</h3>
+        </div>
+        <div class="card-body" align="center">
+            <form action="/Admin/EkleYayinevi" method="post" role="form" onsubmit="subFr()">
+                @if (Model != null)
+                {
+                    <input type="hidden" name="id" value="@Model.id" />
+                }
+                <div align="center" class="form-group col-md-6">
+                    <label>Ad</label>
+                    @if (Model.pName == null)
+                    {
+                        <input value="" class="form-control" type="text" name="pName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                    }
+                    else
+                    {
+                        <input value="@Model.pName" class="form-control" type="text" name="pName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div align="center" class="form-group col-md-6">
+                    <label>Logo link</label>
+                    @if (Model.pLogo == null)
+                    {
+                        <input value="" class="form-control" type="text" name="pLogo" maxlength="100" placeholder="Logo link" />
+                    }
+                    else
+                    {
+                        <input value="@Model.pLogo" class="form-control" type="text" name="pLogo" maxlength="100" placeholder="Logo link" />
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="clearfix"> </div>
+                <br />
+                <div align="center" class="sub_home">
+                    <button type="submit" class="btn btn-primary" id="buttons">Kaydet</button>
+                    <div class="clearfix"> </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            Gerekli alanları boş bırakmayın
+        </div>
+    </div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(".tdrSil").click(function () {
+        var sonuc = confirm("Yayinevi silinecek, işleme devam edilsinmi?");
+        if (sonuc) {
+            var tdrId = $(this).data("tdrid");
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/Admin/YayineviSil/" + tdrId,
+                    success: function () {
+                        alert("Yayinevi başarıyla kaldırıldı.");
+                        window.location.replace("/Admin/Yayinevleri");
+                    },
+                    error: function () {
+                        alert("Yayinevi kaldırılmaya çalışırken bir hata oluştu");
+                    }
+                });
+        }
+
+        else {
+            alert("İşlem iptal edildi");
+
+        }
+    }
+    );
+
+</script>
 

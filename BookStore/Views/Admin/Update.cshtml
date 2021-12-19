@@ -1,0 +1,367 @@
+﻿@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+
+    Model m = new Model();
+
+}
+@using BookStore.Models
+
+@if (ViewBag.Op == 1)
+{
+    int id = ViewBag.Id;
+    author yazar = m.authors.FirstOrDefault(x => x.id == id);
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h3 class="title">Yazar Güncelleme Formu</h3>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <a href="/Admin/Yazarlar" class="btn btn-danger btn-pri"><i class="fa fa-backward" aria-hidden="true"></i> Geri</a>
+                <div class="card-tools">
+                </div>
+            </div>
+            <div class="card-body" align="center">
+                <form action="/Admin/EkleYazar" method="post" role="form">
+                    @if (yazar != null)
+                    {
+                        <input type="hidden" name="id" value="@yazar.id" />
+                    }
+                    <div align="center" class="form-group col-md-6">
+                        <label>Ad</label>
+                        @if (yazar.aName == null)
+                        {
+                            <input value="" class="form-control" type="text" name="aName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                        }
+                        else
+                        {
+                            <input value="@yazar.aName" class="form-control" type="text" name="aName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div align="center" class="form-group col-md-6">
+                        <label>Açıklama</label>
+                        @if (yazar.aDescription == null)
+                        {
+                            <input value="" class="form-control" type="text" name="aDescription" maxlength="1200" placeholder="Açıklama" />
+                        }
+                        else
+                        {
+                            <input value="@yazar.aDescription" class="form-control" type="text" name="aDescription" maxlength="1200" placeholder="Açıklama" />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div align="center" class="form-group col-md-6">
+                        <label>Resim link</label>
+                        @if (yazar.aImage == null)
+                        {
+                            <input value="" class="form-control" type="text" name="aImage" maxlength="100" placeholder="Resim link" />
+                        }
+                        else
+                        {
+                            <input value="@yazar.aImage" class="form-control" type="text" name="aImage" maxlength="100" placeholder="Resim link" />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div align="center" class="form-group col-md-6">
+                        <label>Wiki link</label>
+                        @if (yazar.aLink == null)
+                        {
+                            <input value="" class="form-control" type="text" name="aLink" maxlength="100" placeholder="Wiki link" />
+                        }
+                        else
+                        {
+                            <input value="@yazar.aLink" class="form-control" type="text" name="aLink" maxlength="100" placeholder="Wiki link" />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                    <br />
+                    <div align="center" class="sub_home">
+                        <button type="submit" class="btn btn-primary" id="buttons">Kaydet</button>
+                        <div class="clearfix"> </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                Gerekli alanları boş bırakmayın
+            </div>
+        </div>
+    </section>
+}
+
+@if (ViewBag.Op == 2)
+{
+    decimal id = ViewBag.Id;
+    book kitap = m.books.FirstOrDefault(x => x.isbn == id);
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h3 class="title">Kitap Güncelleme Formu</h3>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <a href="/Admin/Kitaplar" class="btn btn-danger btn-pri"><i class="fa fa-backward" aria-hidden="true"></i> Geri</a>
+                <div class="card-tools">
+                </div>
+            </div>
+            <div class="card-body" align="center">
+                <form action="/Admin/EkleKitap" method="post" role="form" onsubmit="subFr()">
+                    @if (kitap != null)
+                    {
+                        <input type="hidden" name="isbn" value="@kitap.isbn" />
+                    }
+                    <div align="center" class="form-group col-md-6">
+                        <label>Ad</label>
+                        @if (kitap.bName == null)
+                        {
+                            <input value="" class="form-control" type="text" name="bName" maxlength="50" placeholder="Kitap adı" required="" style="border-block-color:red" />
+                        }
+                        else
+                        {
+                            <input value="@kitap.bName" class="form-control" type="text" name="bName" maxlength="50" placeholder="Kitap adı" required="" style="border-block-color:red" />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group col-md-4" align="right">
+                            <label>Yazar</label> <br />
+                            @Html.DropDownList("Yazarlar")
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Kategori</label> <br />
+                            @Html.DropDownList("Kategoriler")
+                        </div>
+                        <div class="form-group col-md-4" align="left">
+                            <label>Yayınevi</label> <br />
+                            @Html.DropDownList("Yayinevleri")
+                        </div>
+                    </div>
+                    <br />
+                    <div align="center" class="form-group col-md-6">
+                        <label>Açıklama</label>
+                        @if (kitap.detail == null)
+                        {
+                            <input value="" class="form-control" type="text" name="detail" maxlength="2500" placeholder="Açıklama" />
+                        }
+                        else
+                        {
+                            <input value="@kitap.detail" class="form-control" type="text" name="detail" maxlength="2500" placeholder="Açıklama" />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div align="center" class="form-group col-md-6">
+                        <label>Resim link</label>
+                        @if (kitap.bImage == null)
+                        {
+                            <input value="" class="form-control" type="text" name="bImage" maxlength="100" placeholder="Resim link" />
+                        }
+                        else
+                        {
+                            <input value="@kitap.bImage" class="form-control" type="text" name="bImage" maxlength="100" placeholder="Resim link" />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div align="center" class="form-group col-md-6">
+                        <label>Yayınlanma tarihi</label>
+                        @if (kitap.bDate == null)
+                        {
+                            <input value="" class="form-control" type="date" name="bDate" maxlength="100" required="" style="border-block-color:red"  />
+                        }
+                        else
+                        {
+                            <input value="@kitap.bDate" class="form-control" type="text" name="bDate" maxlength="100" required="" style="border-block-color:red"  />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div align="center" class="form-group col-md-6">
+                        <label>Fiyat</label>
+                        @if (kitap.price == null)
+                        {
+                            <input value="" class="form-control" type="number" min="1" step="0.01" name="price" maxlength="100" placeholder="Fiyat" required="" style="border-block-color:red"  />
+                        }
+                        else
+                        {
+                            <input value="@kitap.price" class="form-control" type="number" min="1" step="0.01" name="price" maxlength="100" placeholder="Fiyat" required="" style="border-block-color:red"  />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div align="center" class="form-group col-md-6">
+                        <label>Stok</label>
+                        @if (kitap.stock == null)
+                        {
+                            <input value="" class="form-control" type="number" min="0" step="1" name="stock" maxlength="100" placeholder="Stok adeti" required="" style="border-block-color:red" />
+                        }
+                        else
+                        {
+                            <input value="@kitap.stock" class="form-control" type="number" min="0" step="1" name="stock" maxlength="100" placeholder="Stok adeti" required="" style="border-block-color:red"  />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                    <br />
+                    <div align="center" class="sub_home">
+                        <button type="submit" class="btn btn-primary" id="buttons">Kaydet</button>
+                        <div class="clearfix"> </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                Gerekli alanları boş bırakmayın
+            </div>
+        </div>
+    </section>
+}
+@if (ViewBag.Op == 3)
+{
+    int id = ViewBag.Id;
+    genre kategori = m.genres.FirstOrDefault(x => x.id == id);
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h3 class="title">Kategori Güncelleme Formu</h3>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <a href="/Admin/Kategoriler" class="btn btn-danger btn-pri"><i class="fa fa-backward" aria-hidden="true"></i> Geri</a>
+                <div class="card-tools">
+                </div>
+            </div>
+            <div class="card-body" align="center">
+                <form action="/Admin/EkleKategori" method="post" role="form">
+                    @if (kategori != null)
+                    {
+                        <input type="hidden" name="id" value="@kategori.id" />
+                    }
+                    <div align="center" class="form-group col-md-6">
+                        <label>Ad</label>
+                        @if (kategori.gName == null)
+                        {
+                            <input value="" class="form-control" type="text" name="gName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                        }
+                        else
+                        {
+                            <input value="@kategori.gName" class="form-control" type="text" name="gName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div align="center" class="form-group col-md-6">
+                        <label>Açıklama</label>
+                        @if (kategori.gDescription == null)
+                        {
+                            <input value="" class="form-control" type="text" name="gDescription" maxlength="200" placeholder="Açıklama" />
+                        }
+                        else
+                        {
+                            <input value="@kategori.gDescription" class="form-control" type="text" name="gDescription" maxlength="200" placeholder="Açıklama" />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                    <br />
+                    <div align="center" class="sub_home">
+                        <button type="submit" class="btn btn-primary" id="buttons">Kaydet</button>
+                        <div class="clearfix"> </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                Gerekli alanları boş bırakmayın
+            </div>
+        </div>
+    </section>
+}
+@if (ViewBag.Op == 4)
+{
+    int id = ViewBag.Id;
+    publisher kategori = m.publishers.FirstOrDefault(x => x.id == id);
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h3 class="title">Yayınevi Güncelleme Formu</h3>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <a href="/Admin/Yayinevleri" class="btn btn-danger btn-pri"><i class="fa fa-backward" aria-hidden="true"></i> Geri</a>
+                <div class="card-tools">
+                </div>
+            </div>
+            <div class="card-body" align="center">
+                <form action="/Admin/EkleYayinevi" method="post" role="form">
+                    @if (kategori != null)
+                    {
+                        <input type="hidden" name="id" value="@kategori.id" />
+                    }
+                    <div align="center" class="form-group col-md-6">
+                        <label>Ad</label>
+                        @if (kategori.pName == null)
+                        {
+                            <input value="" class="form-control" type="text" name="pName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                        }
+                        else
+                        {
+                            <input value="@kategori.pName" class="form-control" type="text" name="pName" maxlength="100" placeholder="Ad" required="" style="border-block-color:red" />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div align="center" class="form-group col-md-6">
+                        <label>Logo link</label>
+                        @if (kategori.pLogo == null)
+                        {
+                            <input value="" class="form-control" type="text" name="pLogo" maxlength="100" placeholder="Açıklama" />
+                        }
+                        else
+                        {
+                            <input value="@kategori.pLogo" class="form-control" type="text" name="pLogo" maxlength="100" placeholder="Açıklama" />
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                    <br />
+                    <div align="center" class="sub_home">
+                        <button type="submit" class="btn btn-primary" id="buttons">Kaydet</button>
+                        <div class="clearfix"> </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                Gerekli alanları boş bırakmayın
+            </div>
+        </div>
+    </section>
+}
+

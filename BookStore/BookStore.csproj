@@ -217,6 +217,7 @@
     <Content Include="Views\Admin\Kitaplar.cshtml" />
     <Content Include="Views\Admin\Kategoriler.cshtml" />
     <Content Include="Views\Admin\Yayinevleri.cshtml" />
+    <Content Include="Views\Admin\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

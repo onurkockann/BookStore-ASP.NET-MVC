@@ -1,6 +1,11 @@
 ﻿@{
     ViewBag.Title = "Home Page";
     Model m = new Model();
+    int isAdm = 0;
+    if(HttpContext.Current.User.Identity.Name != "")
+    {
+        isAdm = (int)m.users.FirstOrDefault(x => x.email == HttpContext.Current.User.Identity.Name).isAdmin;
+    }
 
     //Kategoriler,yazarlar ve yayınevleri çekiliyor.
     List<genre> pd = m.genres.ToList();
@@ -111,6 +116,10 @@
                                         Sepetim <span class="badge alert-danger">@ViewBag.cartPrCount</span>
                                     </a>
                                 </li>
+                                if (isAdm == 1)
+                                {
+                                    <li><a class="dropdown-item" href="/Admin/Index">Admin Panel</a></li>
+                                }
                                 <li><a class="dropdown-item" href="/User/Logout">Çıkış</a></li>
                             }
                             else

@@ -25,13 +25,89 @@
             </tr>
             @foreach (user item in ViewBag.Users)
             {
-                <tr>
-                    <td>@item.firstname  @item.lastname</td>
-                    <td>@item.email</td>
-                    <td>@item.phone</td>
-                </tr>
+                if (item.isAdmin != 1)
+                {
+                    <tr>
+                        <td>@item.firstname  @item.lastname</td>
+                        <td>@item.email</td>
+                        <td>@item.phone</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr style="background-color:darkseagreen">
+                        <td>@item.firstname  @item.lastname (Admin)</td>
+                        <td>@item.email</td>
+                        <td>@item.phone</td>
+                    </tr>
+                }
+
             }
         </table>
+    </div>
+</section>
+
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="title">Kullanıcı Kaydı Oluştur</h3>
+        </div>
+        <div class="card-body" align="center">
+            <form action="/User/Register" method="post" role="form" onSubmit="return confirm('Kullanıcı kaydı oluşturulacak... Oluşan bu kullanıcı bilgilerini daha sonra düzeltemez veya kullanıcıyı kaldıramazsınız, onaylıyormusunuz?');">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Mail</label>
+                            <input value="" class="form-control" type="email" name="email" placeholder="E Mail" maxlength="25" required="" />
+                        </div>
+                        <div class="form-group">
+                            <label>Şifre</label>
+                            <input value="" class="form-control" type="password" name="password" placeholder="Şifre" minlength="4" maxlength="25" required="" />
+                        </div>
+                        <div class="form-group">
+                            <label>Şifre Tekrar</label>
+                            <input value="" class="form-control" type="password" name="pwt" placeholder="Şifre" minlength="4" maxlength="25" required="" />
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="checkbox" id="adch" name="Admin" value="ok" />
+                            <label for="adch">Kullanıcı admin mi? Evet ise işaretleyin.</label><br />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Ad</label>
+                            <input value="" class="form-control" type="text" name="firstname" placeholder="Ad" maxlength="20" required="" />
+                        </div>
+                        <div class="form-group">
+                            <label>Soyad</label>
+                            <input value="" class="form-control" type="text" name="lastname" placeholder="Soyad" maxlength="20" required="" />
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon</label>
+                            <input value="" class="form-control" type="text" name="phone" placeholder="phone" maxlength="13" required="" />
+                        </div>
+                        <div class="form-group">
+                            <label>Doğum Tarihi</label>
+                            <input value="" class="form-control" type="date" name="birthday" maxlength="100"/>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-6" align="left" hidden="">
+                        <input type="checkbox" id="idkvkk" name="KVKK" value="ok" checked=""/>
+                        <label for="idkvkk">Şartları, politikaları ve kullanım koşullarını okudum kabul ediyorum.</label><br />
+                    </div>
+                    <div class="col-md-6" align="right">
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            Gerekli alanları boş bırakmayın
+        </div>
     </div>
 </section>
 

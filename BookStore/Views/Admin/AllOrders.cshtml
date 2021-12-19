@@ -22,7 +22,7 @@
         <table class="table table-bordered">
             <tr>
                 <th>Sipariş tarihi</th>
-                <th>Toplam fiyat</th>
+                <th>Toplam tutar</th>
                 <th>Adres</th>
                 <th>Ad / Soyad</th>
                 <th>E-Mail / Telefon</th>
@@ -43,12 +43,12 @@
                         <td>
                             @foreach(orderedItem itemx in m.orderedItems.Where(x=> x.orderId == tempId).ToList())
                             {
-                                <h5>
+                                <label>
                                     <a href="/Book/Detail?isbn=@itemx.book.isbn" target="_blank">
                                         @itemx.book.bName
                                     </a>
                                     (@itemx.book.price TL x @itemx.bookQty adet),<br />
-                                </h5>
+                                </label>
                             }
                         </td>
                         @if (item.order.status == 1)
@@ -58,8 +58,16 @@
                         else
                         {
                             <td>
-                                <span class="badge alert-warning">Onayla</span>
-                                <span class="badge alert-danger">İptal et</span>
+                                <span class="badge alert-warning">
+                                    <a href="/Admin/ConfirmOrder?id=@item.orderId" onclick="return confirm('Siparişi onaylamak istediğinize eminmisiniz? Bu işlem geri alınmaz.')">
+                                        Onayla
+                                    </a>
+                                </span>
+                                <span class="badge alert-danger">
+                                    <a href="/Admin/CancelOrder?id=@item.orderId" onclick="return confirm('Siparişi iptal edip silmek istediğinize eminmisiniz? Bu işlem geri alınmaz.')">
+                                        İptal et
+                                    </a>
+                                </span>
                             </td>
                         }
                     </tr>
