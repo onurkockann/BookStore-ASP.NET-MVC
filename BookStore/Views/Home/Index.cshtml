@@ -5,83 +5,77 @@
 }
 @using BookStore.Models
 @model List<book>
+<!-- home section-->
 
-<div class="p-5 mb-4 bg-light border rounded-3">
-    <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold">Book Store</h1>
-        <p class="col-md-8 fs-4">En yeni ve en popüler kitaplara ulaşabileceğiniz kaynağa hoşgeldiniz.</p>
+<section class="home" id="home">
+    <div class="row">
+        <div class="content">
+            <h3>Aradığınız kitaplar burada.</h3>
+            <p>En yeni ve en popüler kitaplara ulaşabileceğiniz kaynağa hoşgeldiniz.</p>
+        </div>
+        <div class="swiper books-slider">
+            <div class="swiper-wrapper">
+                <a href="#arrivals" class="swiper-slide"><img src="~/bsfront/image/book-8.png" alt=""></a>
+            </div>
+            <img src="/bsfront/image/stand.png" class="stand" alt="">
+        </div>
     </div>
-    @if (@HttpContext.Current.User.Identity.Name == "")//Login olan bir kullanıcı varmı? Yok ise ;
-    {
+
+</section>
+
+<section class="arrivals" id="arrivals">
+    <h1 class="heading"><span>Kitap Listesi(@Model.Count)</span></h1>
+    <div class="swiper arrivals-slider">
         <div class="row">
-            <div class="col-md-6" align="right">
-                <a href="/User/Login" class="btn btn-primary btn-lg">Giriş yap</a>
-            </div>
-            <div class="col-md-6">
-                <a href="/User/Register" class="btn btn-outline-secondary btn-lg">Kayıt Ol</a>
-            </div>
-        </div>
-    }
-    else // Login olan kullanıcı var ise giriş yap ve kayıt ol buttonları yerine hoşgeldiniz yazısı gösterilir;
-    {
-        {
-            Model m = new Model();
-            String ad = m.users.FirstOrDefault(x => x.email == HttpContext.Current.User.Identity.Name).firstname.ToString();
-            String soyad = m.users.FirstOrDefault(x => x.email == HttpContext.Current.User.Identity.Name).lastname.ToString();
-            <p>Hoşgeldin @ad @soyad </p>
-        }
-
-    }
-    <div align="right">Listelenen kitap sayısı: @Model.Count</div>
-</div>
-
-<div class="row">
-    @foreach (book item in Model)
-    {
-        <div class="col-md-4">
-            <div class="card" style="width: 18rem;">
-                @if (ViewBag.Filter == "BS")
-                {
-                    <div class="card-header">
-                        En çok satan sıralaması = @bsCtr
-                    </div>
-                    bsCtr++;
-                }
-                else if (ViewBag.Filter == "NA")
-                {
-                    <div class="card-header">
-                        @Convert.ToDateTime(item.bDate).ToLongDateString() Tarihinde yayımlandı
-                    </div>
-                }
-                <img src="@item.bImage" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">@item.bName</h5>
-                    <p class="card-text">
-                        @if (item.detail != null)
+            @foreach (book item in Model)
+            {
+                <div class="col-md-3">
+                    <div class="card">
+                        @if (ViewBag.Filter == "BS")
                         {
-                            if (item.detail.Length >= 150)
-                            {
-                                @item.detail.Substring(0, 150).ToString()@Html.ActionLink("....", "Detail", "Book", new { isbn = item.isbn }, null)
-                            }
-                            else
-                            {
-                                @item.detail
-                            }
+                            <div class="card-header">
+                                En çok satan sıralaması = @bsCtr
+                            </div>
+                            bsCtr++;
                         }
+                        else if (ViewBag.Filter == "NA")
+                        {
+                            <div class="card-header">
+                                @Convert.ToDateTime(item.bDate).ToLongDateString() Tarihinde yayımlandı
+                            </div>
+                        }
+                        <img src="@item.bImage" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.bName</h5>
+                            <p class="card-text">
+                                @if (item.detail != null)
+                                {
+                                    if (item.detail.Length >= 150)
+                                    {
+                                        @item.detail.Substring(0, 150).ToString()@Html.ActionLink("....", "Detail", "Book", new { isbn = item.isbn }, null)
+                                    }
+                                    else
+                                    {
+                                        @item.detail
+                                    }
+                                }
 
-                    </p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <a href="/Book/Detail?isbn=@item.isbn" class="btn btn-primary">İncele</a>
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="/Book/Detail?isbn=@item.isbn" class="btn btn-primary">İncele</a>
 
-                        </div>
-                        <div class="col-md-6" align="right">
-                            <strong>@item.price TL</strong>
+                                </div>
+                                <div class="col-md-6" align="right">
+                                    <strong>@item.price TL</strong>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-
                 </div>
-            </div>
+            }
         </div>
-    }
-</div>
+    </div>
+</section>
+<!-- /arrivals-->

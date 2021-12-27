@@ -54,6 +54,8 @@ namespace BookStore.Controllers
             }
             else
             {
+                TempData["1"] = getBooks.Count.ToString() + " Adet kitap listelendi.";
+                ViewBag.DoneMsg = TempData["1"];
                 return View("Index", getBooks);
             }
         }

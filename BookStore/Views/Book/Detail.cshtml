@@ -34,7 +34,7 @@
             <p class="mb-2 text-muted text-uppercase small">@Model.genre1.gName</p>
             <p><span class="mr-1"><strong>@Model.price TL</strong></span></p>
             <p class="pt-1">
-                @Model.detail
+                <h3>@Model.detail</h3>
             </p>
             <div class="table-responsive">
                 <table class="table table-sm table-borderless mb-0">
@@ -61,10 +61,10 @@
                     @if (HttpContext.Current.User.Identity.Name != "")
                     {
                         <form action="/Book/ConfirmPayout" method="get">
-                            <div class="table-responsive mb-2">
+                            <h3>
                                 Adet
-                                <input id="quantity" min="1" max="@Model.stock" name="quantity" value="1" type="number">
-                            </div>
+                                <input id="quantity" min="1" max="@Model.stock" name="quantity" value="1" type="number" style="border:groove;">
+                            </h3>
                             <input type="hidden" name="isbn" value="@Model.isbn" id="isbn" />
                             <button type="submit" class="btn btn-primary btn-md mr-1 mb-2">Şimdi al</button>
                             <input type="button" value="Sepete Ekle" id="addcart" class="btn btn-light btn-md mr-1 mb-2">
