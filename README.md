@@ -1,7 +1,7 @@
 # BookStore-ASP.NET-MVC
 # TR-Turkish
 
-Bu proje bir web uygulamasıdır. Freehosting üzerine push edilmiştir bkz: http://www.macbookcrawler.somee.com/
+Bu proje bir web uygulamasıdır. Freehosting üzerine push edilmiştir bkz: https://www.fbookstore.somee.com/
 
 Aynı zamanda, aşağıdaki direktifler ile lokalden de çalıştırabilirsiniz;
 
