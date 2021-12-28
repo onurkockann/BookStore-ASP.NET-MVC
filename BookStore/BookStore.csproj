@@ -168,11 +168,6 @@
   <ItemGroup>
     <Content Include="bsfront\css\style.css" />
     <Content Include="bsfront\image\banner-bg.jpg" />
-    <Content Include="bsfront\image\blog-1.jpg" />
-    <Content Include="bsfront\image\blog-2.jpg" />
-    <Content Include="bsfront\image\blog-3.jpg" />
-    <Content Include="bsfront\image\blog-4.jpg" />
-    <Content Include="bsfront\image\blog-5.jpg" />
     <Content Include="bsfront\image\book-1.png" />
     <Content Include="bsfront\image\book-10.png" />
     <Content Include="bsfront\image\book-2.png" />
@@ -190,14 +185,7 @@
     <Content Include="bsfront\image\favicon.ico" />
     <Content Include="bsfront\image\letter-bg.jpg" />
     <Content Include="bsfront\image\loader-img.gif" />
-    <Content Include="bsfront\image\pic-1.png" />
-    <Content Include="bsfront\image\pic-2.png" />
-    <Content Include="bsfront\image\pic-3.png" />
-    <Content Include="bsfront\image\pic-4.png" />
-    <Content Include="bsfront\image\pic-5.png" />
-    <Content Include="bsfront\image\pic-6.png" />
     <Content Include="bsfront\image\stand.png" />
-    <Content Include="bsfront\image\worldmap.png" />
     <Content Include="bsfront\index.html" />
     <Content Include="bsfront\js\script.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -252,6 +240,7 @@
     <Content Include="Views\Admin\Kategoriler.cshtml" />
     <Content Include="Views\Admin\Yayinevleri.cshtml" />
     <Content Include="Views\Admin\Update.cshtml" />
+    <Content Include="Views\Home\Terms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

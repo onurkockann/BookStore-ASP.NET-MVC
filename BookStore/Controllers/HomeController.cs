@@ -115,5 +115,11 @@ namespace BookStore.Controllers
             ViewBag.Done = "Ürünler en son yayınlanma tarihine göre sıralandı";
             return View("Index", getBooks);
         }
+
+        [AllowAnonymous]//Login olmamış kullanıcılara da görünmesi izin verilir.
+        public ActionResult Terms()
+        {
+            return View();
+        }
     }
 }
