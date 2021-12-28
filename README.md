@@ -1,18 +1,30 @@
 # BookStore-ASP.NET-MVC
-This project created to beign e-commerce website for book store owners. It has been pushed on hosting. You can look at the website : http://www.fbookstore.somee.com/
+# TR-Turkish
 
-Also, you can run the project as localhost.
+Bu proje bir web uygulamasıdır. Freehosting üzerine push edilmiştir bkz: http://www.macbookcrawler.somee.com/
 
-Requirements : you must install Visual Studio at least 2019, MSSQL Management studio is not required because of Visual Studio's SQL Server Object Explorer feature.
+Aynı zamanda, aşağıdaki direktifler ile lokalden de çalıştırabilirsiniz;
 
-This project designed for "System programming" lecture in Yildiz Technical University-Computer Engineering department as a term project.
+İlkönce, Visual Studio(minimum 2019) ve veritabanı için Microsoft SQL Server Management Studio kurulu olması gerekiyor.
 
-Used Technologies :
+.bak uzantılı dosya ile MSSQLde eBooksDB isimli veritabanı oluşturarak içine restore edin.
 
--C# For Programming Language
+Veritabanı implementasyonu tamamlandıktan sonra "Web.config" isimli dosyadan connection string bölümündeki server adını sizin lokaldeki server adınız ile değiştirmeniz gerekmektedir.
 
--ASP.NET MVC
+Proje nasıl ayağa kaldırılır:
 
--MSSQL
+Gerekli hazırlık aşamaları yapıldıktan sonra Visual studio ile projeyi açın. Daha sonra solution üzerinden "Manage nuget packages" sayfasına gelerek eksik paketlerin kurulumunu yukarıda gözüken Restore butonu ile tamamlayın.
+
+Proje artık ayağa kalkmaya hazır konuma gelecektir.
+
+Bu proje, Yıldız Teknik Üniversitesi - Bilgisayar Mühendisliği bölümünün Sistem Programlama dersinin dönem projesi olarak yapılmıştır.
+
+Kullanılan teknolojiler :
+
+-C# Programlama dili
+
+-ASP.NET Web framework ile birlikte MVC design patternı
+
+-Microsoft SQL Server(MSSQL)
 
 -Entity Framework
