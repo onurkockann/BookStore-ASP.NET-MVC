@@ -1,5 +1,4 @@
-# BookStore-ASP.NET-MVC
-# TR-Turkish
+# BookStore-ASP.NET-MVC(TR:Turkish)
 
 Bu proje bir web uygulamasıdır. Freehosting üzerine push edilmiştir bkz: https://www.fbookstore.somee.com/
 
